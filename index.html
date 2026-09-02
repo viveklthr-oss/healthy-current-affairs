@@ -1,0 +1,2260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Healthy Current Affairs — Content Studio</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#f5f7fb;color:#172033}
+.app{display:flex;min-height:100vh}.side{width:230px;background:#0b1428;color:#fff;padding:20px 14px;position:fixed;inset:0 auto 0 0}
+.brand{font-size:19px;font-weight:700;padding:0 10px 28px}.brand small{display:block;font-size:11px;color:#b9c8e3;margin-top:3px}
+.sec{font-size:10px;color:#8fa0bd;font-weight:700;text-transform:uppercase;margin:17px 10px 7px}.nav{padding:10px 11px;border-radius:7px;font-size:13px;margin-bottom:3px;cursor:pointer}.nav.active{background:#1e4fa0}
+.main{margin-left:230px;flex:1}.top{height:58px;background:#f0f4fa;border-bottom:1px solid #e1e7f0;padding:20px 28px;color:#667085;font-size:12px}.top b{color:#172033}
+.wrap{max-width:1220px;margin:auto;padding:25px 28px}.view{display:none}.view.active{display:block}
+h1{margin:0;color:#0b1428;font-size:27px}.sub{color:#667085;font-size:13px;margin:6px 0 18px}
+.toolbar{display:flex;gap:8px;align-items:center;margin-bottom:15px;flex-wrap:wrap}.btn{border:1px solid #2563eb;background:#fff;color:#2563eb;border-radius:7px;padding:9px 13px;font-weight:700;cursor:pointer}.btn.primary{background:#2563eb;color:#fff}.btn.gray{border-color:#d8dee8;color:#475467}.btn.small{padding:7px 10px;font-size:11px}
+.card{background:#fff;border:1px solid #e0e6ef;border-radius:10px;padding:19px}.steps{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.step{padding:7px 12px;border-radius:999px;border:1px solid #d8e0eb;color:#667085;font-size:11px;font-weight:700}.step.active{background:#eef4ff;color:#2563eb;border-color:#bcd0fa}
+.section{border:1px solid #e1e6ee;border-radius:9px;overflow:hidden;margin-bottom:12px}.head{padding:13px 15px;background:#fbfcfe;display:flex;justify-content:space-between;cursor:pointer}.head strong{font-size:13px}.body{padding:16px}.collapsed{display:none}
+.grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:14px}label{display:block;font-size:12px;font-weight:700;color:#344054;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid #d5dce7;border-radius:7px;padding:10px;font:inherit;color:#172033}textarea{min-height:105px;resize:vertical}.auto{background:#f5f9ff;color:#31578f}.hint{font-size:11px;color:#667085;margin-top:5px}.req{color:#dc2626}.optional{font-weight:400;color:#667085}.counter{float:right;color:#98a2b3;font-size:10px;font-weight:400}
+.actions{border-top:1px solid #e1e6ee;padding-top:16px;margin-top:18px;text-align:right}.status{float:left;color:#16a34a;font-size:11px;font-weight:700;padding-top:9px}
+.toggle{display:inline-flex;border:1px solid #d5dce7;border-radius:7px;overflow:hidden;background:#fff}.toggle button{border:0;background:#fff;padding:8px 12px;font-weight:700;color:#667085;cursor:pointer}.toggle button.active{background:#eef4ff;color:#2563eb}
+.editor-layout{display:grid !important;grid-template-columns:minmax(600px,1fr) minmax(360px,460px) !important;gap:22px !important;align-items:start !important}@media(max-width:800px){.editor-layout{grid-template-columns:1fr !important}.preview-pane{position:relative !important;height:auto !important;max-height:none !important}.preview-card{margin-top:0}}.preview-pane{position:sticky;top:15px;height:calc(100vh - 95px);overflow:auto}
+.preview-card{background:#fff;border:1px solid #dfe5ee;border-radius:10px;padding:20px}.preview-card h2{font-size:24px;margin:10px 0 16px;color:#0b1428}.pill{display:inline-block;background:#eef4ff;color:#2455a4;padding:5px 8px;border-radius:999px;font-size:10px;margin-right:5px}.why{background:#f1f6ff;border:1px solid #cfe0ff;border-radius:8px;padding:11px;font-size:12px}.short{background:#f5f7fb;border-left:4px solid #2d63dd;padding:13px;line-height:1.6;font-size:12px}.preview-card h3{margin:20px 0 8px;font-size:15px}.points,.revision-list{margin:5px 0 0 20px;padding:0;line-height:1.6;font-size:12px}.points li,.revision-list li{padding:3px 0}.context{background:#fff9ed;border:1px solid #fde3b0;border-radius:8px;padding:12px}.take{background:#effaf2;border:1px solid #b7e6c3;border-radius:8px;padding:12px}.take .revision-list{margin-top:6px}
+.table{width:100%;border-collapse:collapse}.table th,.table td{padding:11px 9px;border-bottom:1px solid #edf0f5;text-align:left;font-size:12px}.table th{color:#667085;font-size:11px;cursor:pointer}.icon{border:0;background:none;cursor:pointer;font-size:15px;margin-left:5px}.search{max-width:320px}.sortbar{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.weekcards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.week{background:#fff;border:1px solid #e0e6ef;border-radius:10px;padding:15px}.week h3{margin:0 0 6px;font-size:16px}.week small{display:block;color:#667085;margin-bottom:13px}.weekly-article-row{padding:13px 4px;border-bottom:1px solid #edf0f5;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:15px;border-radius:7px;transition:.15s}.weekly-article-row:hover{background:#f7faff;padding-left:9px;padding-right:9px}.weekly-article-row:focus{outline:2px solid #2563eb;outline-offset:2px}.read-arrow{color:#2563eb;font-size:11px;font-weight:700;white-space:nowrap}.public-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:18px}.public-item{background:#fff;border:1px solid #e0e6ef;border-radius:10px;padding:15px;cursor:pointer}.public-item:hover{border-color:#2563eb}.public-item h3{margin:0 0 7px;font-size:15px}.public-meta{font-size:11px;color:#667085;margin-bottom:9px}.empty{text-align:center;padding:35px;color:#667085;border:1px dashed #d4dbe6;border-radius:9px;background:#fff}
+@media(max-width:1050px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:800px){.side{position:static;width:100%;height:auto}.app{display:block}.main{margin-left:0}.grid,.weekcards{grid-template-columns:1fr}.wrap{padding:18px}}
+
+/* Day 4 v7: desktop live preview stays on the RIGHT */
+.editor-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) 460px !important;
+  gap:22px !important;
+  align-items:start !important;
+}
+.editor-form-pane{min-width:0}
+.preview-pane{
+  display:block !important;
+  position:sticky !important;
+  top:20px !important;
+  height:calc(100vh - 40px) !important;
+  max-height:none !important;
+  overflow:auto !important;
+  min-width:0 !important;
+}
+
+
+
+/* v8: Live Preview is intentionally the RIGHT column on desktop */
+.editor-layout > #formPane{grid-column:1;min-width:0}
+.editor-layout > #previewPane{grid-column:2;grid-row:1;min-width:0;display:block !important;visibility:visible !important}
+@media(max-width:800px){
+  .editor-layout > #formPane,.editor-layout > #previewPane{grid-column:1;grid-row:auto}
+}
+
+
+/* v9 FINAL: Form left + Live Preview right */
+.editor-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) 430px !important;
+  gap:22px !important;
+  align-items:start !important;
+  width:100% !important;
+}
+.editor-layout > #formPane{
+  grid-column:1 !important;
+  grid-row:1 !important;
+  min-width:0 !important;
+}
+.editor-layout > #previewPane{
+  grid-column:2 !important;
+  grid-row:1 !important;
+  min-width:0 !important;
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  position:sticky !important;
+  top:15px !important;
+  height:calc(100vh - 95px) !important;
+  overflow:auto !important;
+}
+@media(max-width:700px){
+  .editor-layout{
+    grid-template-columns:1fr !important;
+  }
+  .editor-layout > #formPane,
+  .editor-layout > #previewPane{
+    grid-column:1 !important;
+    grid-row:auto !important;
+  }
+  .editor-layout > #previewPane{
+    position:relative !important;
+    top:auto !important;
+    height:auto !important;
+    max-height:none !important;
+  }
+}
+
+
+#questions .qb-help{
+  font-size:.82em;
+  font-weight:400;
+  color:#64748b;
+  margin-left:4px;
+}
+#questions .qb-correct-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px 20px;
+  margin:6px 0 12px;
+}
+#questions .qb-correct-grid label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:600;
+}
+#questions .student-preview{
+  background:#fff;
+  border:1px solid #dbe3ee;
+  border-radius:10px;
+  padding:22px;
+  min-height:220px;
+}
+#questions .qb-student-question{
+  color:#0f172a;
+  font-size:15px;
+  line-height:1.55;
+}
+#questions .qb-student-stem{
+  font-weight:600;
+  margin-bottom:16px;
+}
+#questions .qb-student-placeholder{
+  font-size:17px;
+  font-weight:600;
+  margin-bottom:16px;
+}
+#questions .qb-student-statements{
+  margin:0 0 16px;
+}
+#questions .qb-student-statement{
+  display:flex;
+  gap:10px;
+  margin:9px 0;
+  line-height:1.5;
+}
+#questions .qb-no{
+  min-width:20px;
+  font-weight:700;
+}
+#questions .qb-student-instruction{
+  margin:14px 0;
+  font-weight:600;
+}
+#questions .qb-student-choices{
+  border-top:1px solid #cbd5e1;
+  padding-top:10px;
+  margin-top:8px;
+}
+#questions .qb-student-choice{
+  display:flex;
+  gap:9px;
+  align-items:flex-start;
+  margin:9px 0;
+  line-height:1.45;
+}
+#questions .qb-circle{
+  font-size:18px;
+  line-height:1.15;
+  color:#334155;
+}
+#questions .qb-student-match{
+  width:100%;
+  border-collapse:collapse;
+  margin:10px 0 16px;
+}
+#questions .qb-student-match td{
+  padding:7px 8px;
+  border-bottom:1px solid #e2e8f0;
+  vertical-align:top;
+}
+
+</style>
+
+<style id="question-bank-layout-fix">
+/* Question Bank V1 layout isolation: prevent the existing Current Affairs
+   form CSS from affecting the new Question Bank screen. */
+#questions{
+  width:100%;
+  max-width:1220px;
+  margin:0 auto;
+  padding:25px 28px;
+  box-sizing:border-box;
+  overflow-x:hidden;
+}
+#questions, #questions *{box-sizing:border-box}
+#questions .page-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+#questions .page-head h1{margin:0 0 5px;font-size:27px;color:#0b1428}
+#questions .page-head p{margin:0;color:#667085;font-size:13px}
+#questions .qb-stats{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 18px}
+#questions .qb-stats .stat{
+  min-width:160px;
+  background:#fff;
+  border:1px solid #e0e6ef;
+  border-radius:10px;
+  padding:14px 18px;
+}
+#questions .toolbar{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin:0 0 15px;
+}
+#questions .toolbar input{width:260px;max-width:100%}
+#questions .toolbar select{width:190px;max-width:100%}
+#questions .qb-layout{
+  width:100%;
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
+  gap:18px;
+}
+#questions .qb-layout > *{min-width:0}
+#questions .card{width:100%;min-width:0}
+#questions .qb-preview-card{position:sticky;top:18px;height:max-content}
+#questions .qb-preview-card .student-preview{
+  width:100%;
+  min-height:220px;
+  overflow-wrap:anywhere;
+}
+#questions textarea,#questions input,#questions select{max-width:100%}
+#questions .qb-list-item{width:100%;min-width:0;overflow:hidden}
+@media(max-width:850px){
+  #questions .qb-layout{grid-template-columns:1fr}
+  #questions .qb-preview-card{position:static}
+}
+</style>
+
+
+<style id="question-bank-active-view-fix">
+/* Final router isolation: only the selected view may occupy layout space. */
+.view:not(.active){display:none !important}
+#questions.view.active{
+  display:block !important;
+  position:relative;
+  width:100%;
+  margin:0;
+  transform:none;
+}
+</style>
+
+<style id="qb-searchable-ca-style">
+#qbCaSearch{width:100%;box-sizing:border-box;margin:6px 0 8px;padding:9px 11px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;background:#fff}
+#qbCa{width:100%;box-sizing:border-box;min-height:150px;padding:4px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;font:inherit}
+</style><style id="qb-ca-compact-style">
+.qb-ca-picker{width:100%}
+#qbCaSearch{width:100%;box-sizing:border-box}
+#qbCaSelected{align-items:center;justify-content:space-between;gap:10px;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;background:#f8fafc;font-size:14px}
+#qbCaSelectedText{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#qbCaSelected button{flex:0 0 auto;border:0;background:transparent;color:#64748b;font-size:16px;cursor:pointer;padding:2px 5px}
+#qbCaSelected button:hover{color:#dc2626}
+</style><style id="qb-ca-month-week-style">
+.qb-ca-filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:0 0 8px}
+.qb-ca-filters select{width:100%;box-sizing:border-box;padding:9px 11px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;font:inherit}
+@media(max-width:850px){.qb-ca-filters{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.qb-ca-filters{grid-template-columns:1fr}}
+</style>
+<style id="qb-match-choice-fix">
+#questions .qb-match-row{align-items:center}
+#questions .qb-match-row input{min-width:0}
+#questions #qbDynamic .qb-row{margin-top:8px}
+#questions #qbAnswerArea .qb-correct-grid{margin-bottom:4px}
+</style>
+
+<style id="weekly-quiz-style">
+#quiz .page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+#quiz .quiz-card{background:#fff;border:1px solid #e0e6ef;border-radius:10px;padding:20px;margin-bottom:18px}
+#quiz .quiz-section-title{font-size:18px;font-weight:700;color:#0b1428;margin-bottom:16px}
+#quiz .quiz-filters{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+#quiz .quiz-filters label{margin-bottom:6px}
+#quiz .quiz-filters select{width:100%}
+#quiz .quiz-available{margin-top:16px;padding:12px;background:#f5f9ff;border:1px solid #d7e5ff;border-radius:8px;color:#31578f;font-size:13px}
+#quiz .quiz-actions{display:flex;justify-content:flex-end;gap:10px;border-top:1px solid #e6ebf2;margin-top:18px;padding-top:16px}
+#quiz .quiz-player-head{display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #e6ebf2;padding-bottom:14px;margin-bottom:18px}
+#quiz .quiz-player-head h2{margin:0 0 5px;color:#0b1428;font-size:21px}
+#quiz .quiz-meta{font-size:11px;color:#667085}
+#quiz .quiz-progress{font-weight:700;color:#2563eb;background:#eef4ff;padding:8px 11px;border-radius:999px;white-space:nowrap}
+#quiz .quiz-question{border:1px solid #e0e6ef;border-radius:10px;padding:18px;margin-bottom:14px}
+#quiz .quiz-qhead{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+#quiz .quiz-qno{font-weight:800;color:#2563eb;min-width:28px}
+#quiz .quiz-qtext{font-weight:700;line-height:1.55;color:#172033}
+#quiz .quiz-statements{margin:10px 0 14px 38px}
+#quiz .quiz-statement{display:flex;gap:8px;margin:7px 0;line-height:1.5}
+#quiz .quiz-match{width:100%;border-collapse:collapse;margin:10px 0 14px}
+#quiz .quiz-match td{padding:7px 8px;border-bottom:1px solid #edf0f5;vertical-align:top;font-size:13px}
+#quiz .quiz-instruction{font-weight:700;margin:10px 0 8px;color:#344054}
+#quiz .quiz-option{display:flex;gap:9px;align-items:flex-start;padding:9px 10px;margin:5px 0;border:1px solid #e3e8ef;border-radius:7px;cursor:pointer}
+#quiz .quiz-option:hover{background:#f8fbff;border-color:#bfd2f5}
+#quiz .quiz-option input{width:auto;margin-top:3px}
+#quiz .quiz-option b{min-width:20px}
+#quiz .quiz-explanation{display:none;margin-top:12px;padding:12px;border-radius:8px;background:#f8fafc;border-left:4px solid #94a3b8;font-size:12px;line-height:1.55}
+#quiz .quiz-result{margin-top:18px;padding:18px;border-radius:10px;background:#f1f7ff;border:1px solid #cfe0ff}
+#quiz .quiz-score{font-size:25px;font-weight:800;color:#0b1428}
+#quiz .quiz-result-note{margin-top:5px;color:#475467;font-size:12px}
+#quiz .quiz-correct{border-color:#b7e6c3;background:#f4fcf5}
+#quiz .quiz-wrong{border-color:#f3c0c0;background:#fff8f8}
+#quiz .quiz-unanswered{border-color:#ead9a8;background:#fffdf4}
+@media(max-width:850px){#quiz .quiz-filters{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){#quiz .quiz-filters{grid-template-columns:1fr}}
+</style>
+<style id="v50-smart-quiz-style">
+.quiz-smart-note{margin:10px 0 14px;padding:10px 12px;border:1px solid #dbeafe;border-radius:10px;background:#f8fbff;color:#475569;font-size:13px;line-height:1.45}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="brand">📖 Healthy<small>Current Affairs</small></div>
+<div class="sec">Content</div>
+<div class="nav active" onclick="startNewCurrentAffair(this)">➕ Add Current Affair</div>
+<div class="nav" onclick="show('saved',this)">📚 Saved Items</div>
+<div class="nav" onclick="show('weekly',this)">🗓️ Weekly Collections</div>
+<div class="sec">Quizzes</div>
+<div class="nav" onclick="openWeeklyQuiz(this)">🎯 Weekly CA Quiz</div><div class="nav" onclick="openQuestionBank(this)">🧠 Question Bank</div>
+<div class="sec">Website</div><div class="nav" onclick="show('public',this)">🌐 Public Preview</div>
+</aside>
+<main class="main">
+<div class="top"><b>Healthy Current Affairs Studio</b><span style="float:right">Private Content Manager · Day 4</span></div>
+<div class="wrap">
+
+<section id="editor" class="view active">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:end;flex-wrap:wrap"><div><h1 id="editorTitle">Add Current Affair</h1><div class="sub">Write naturally. Preview the final article while you work.</div></div><div style="display:flex;gap:10px;align-items:center"><button type="button" class="btn primary" onclick="startNewCurrentAffair()">＋ New Current Affair</button><div class="toggle"><button id="formBtn" class="active" onclick="setMode('form')">Form</button><button id="previewBtn" onclick="setMode('preview')">Preview</button></div></div></div>
+
+<div class="editor-layout">
+<div class="card" id="formPane">
+<div class="steps"><span class="step active">① Basic Information</span><span class="step">② Current Affair</span><span class="step">③ Exam Relevance</span></div>
+
+<div class="section"><div class="head" onclick="toggle('basic','ba')"><strong>① Basic Information</strong><span id="ba">⌃</span></div><div class="body" id="basic">
+<div class="grid">
+<div><label>Title <span class="req">*</span></label><input id="title" placeholder="Actual current-affair headline"></div>
+<div><label>Date of Event <span class="req">*</span></label><input id="date" type="date" onchange="autoWeek()"></div>
+<div><label>Current Affairs Week</label><input id="week" class="auto" readonly placeholder="Auto-calculated"></div>
+<div><label>Primary Category <span class="req">*</span></label><select id="cat"><option value="National">National</option><option value="Government Schemes">Government Schemes</option><option value="International Affairs">International Affairs</option><option value="Banking & Finance">Banking & Finance</option><option value="MoUs & Agreements">MoUs & Agreements</option><option value="Appointments & Resignations">Appointments & Resignations</option><option value="Awards">Awards</option><option value="Summits, Events & Conferences">Summits, Events & Conferences</option><option value="Defence">Defence</option><option value="Science & Technology">Science & Technology</option><option value="Sports">Sports</option><option value="Books & Authors">Books & Authors</option><option value="Obituaries">Obituaries</option><option value="Important Days">Important Days</option><option value="Miscellaneous">Miscellaneous</option></select></div>
+</div></div>
+
+<div class="section"><div class="head" onclick="toggle('content','ca')"><strong>② Current Affair Content</strong><span id="ca">⌄</span></div><div class="body collapsed" id="content">
+<div style="margin-bottom:15px"><label>Why in News? <span class="req">*</span><span class="counter" id="wc">0/500</span></label><textarea id="why" maxlength="500" oninput="counter('why','wc',500)" placeholder="Why is this important this week?"></textarea></div>
+<div style="margin-bottom:15px"><label>In Short <span class="optional">(optional)</span><span class="counter" id="sc">0/800</span></label><textarea id="short" maxlength="800" oninput="counter('short','sc',800)" placeholder="Give the quickest accurate understanding."></textarea></div>
+<div><label>Key Points <span class="req">*</span></label><textarea id="points" placeholder="One point per line. Example:&#10;Golden Boot: Kylian Mbappé — 10 goals&#10;Golden Ball: Rodri&#10;Final: Spain defeated Argentina 1–0"></textarea><div class="hint">One point per line. The public page formats these automatically.</div></div>
+</div></div>
+
+<div class="section"><div class="head" onclick="toggle('exam','ea')"><strong>③ Exam Relevance <span class="optional">(use only when useful)</span></strong><span id="ea">⌄</span></div><div class="body collapsed" id="exam">
+<div style="margin-bottom:15px"><label>Important Past Context <span class="optional">(optional)</span></label><textarea id="context" placeholder="Only add useful background. One point per line if there are several."></textarea></div>
+<div><label>🎯 SSC Takeaway <span class="req">*</span></label><textarea id="takeaway" placeholder="3–5 high-value exam facts. One fact per line."></textarea></div>
+</div></div>
+
+<div class="actions"><span class="status" id="status">● Draft auto-save on</span><span style="float:left;margin-left:165px;color:#667085;font-size:11px;padding-top:9px">Save this article, then click <b>＋ New Current Affair</b> for the next one.</span><button type="button" class="btn gray" onclick="clearForm();return false;">Clear</button><button type="button" class="btn primary" id="saveCurrentAffairBtn" onclick="saveItem();return false;">Save Current Affair</button></div>
+</div>
+
+<div class="preview-pane" id="previewPane"><div class="preview-card" id="livePreview"></div></div>
+</div>
+</section>
+
+<section id="saved" class="view"><h1>Saved Items</h1><div class="sub">Search, sort, edit or delete your content.</div>
+<div class="card"><div class="sortbar">
+<input class="search" id="search" placeholder="Search title..." oninput="drawSaved()">
+<input type="date" id="dateFilter" onchange="drawSaved()" style="max-width:180px">
+<select id="categoryFilter" onchange="drawSaved()" style="max-width:190px"><option value="">All Categories</option></select>
+<select id="sortFilter" onchange="drawSaved()" style="max-width:170px"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="category">Category A–Z</option><option value="title">Title A–Z</option></select>
+<button class="btn small gray" onclick="clearFilters()">Clear Filters</button>
+</div>
+<table class="table"><thead><tr><th>Title</th><th>Date</th><th>Week</th><th>Category</th><th>Actions</th></tr></thead><tbody id="savedRows"></tbody></table></div></section>
+
+<section id="weekly" class="view"><h1>Weekly Current Affairs</h1><div class="sub">Choose a month first, then open its weekly current affairs.</div>
+<div class="toolbar"><label style="margin:0">Month <select id="monthSelect" onchange="selectedMonth=this.value;selectedWeek='';drawWeeks()" style="width:220px;margin-left:6px"></select></label></div>
+<div id="weekCards" class="weekcards"></div><div id="weekDetail" style="margin-top:18px"></div></section>
+
+<section id="public" class="view">
+<h1>Public Preview</h1>
+<div class="sub">Browse all published current affairs exactly as a reader would see them.</div>
+<div class="sortbar">
+  <div>
+    <button class="btn small gray" onclick="publicFilter('all')">All</button>
+    <button class="btn small gray" onclick="publicFilter('month')">By Month</button>
+  </div>
+  <select id="publicMonth" style="width:180px" onchange="drawPublic()"></select>
+</div>
+<div id="publicList"></div>
+<div id="publicArticle"></div>
+</section>
+
+
+<section id="quiz" class="view">
+  <div class="page-head">
+    <div>
+      <h1>Weekly CA Quiz</h1>
+      <p class="sub">Build a practice quiz from your saved current-affairs questions.</p>
+    </div>
+  </div>
+
+  <div id="quizSetup" class="quiz-card">
+    <div class="quiz-section-title">Quiz Setup</div>
+    <div class="quiz-filters">
+      <div><label>Year</label><select id="quizYear" onchange="quizFilterChanged('year')"><option value="">All Years</option></select></div>
+      <div><label>Month</label><select id="quizMonth" onchange="quizFilterChanged('month')"><option value="">All Months</option></select></div>
+      <div><label>Week</label><select id="quizWeek" onchange="quizFilterChanged('week')"><option value="">All Weeks</option></select></div>
+      <div><label>Category</label><select id="quizCategory" onchange="quizUpdateAvailable()"><option value="">All Categories</option></select></div>
+      <div><label>Difficulty</label><select id="quizDifficulty" onchange="quizUpdateAvailable()">
+        <option value="">All Difficulties</option><option>Easy</option><option>Moderate</option><option>Hard</option>
+      </select></div>
+      <div><label>Number of Questions</label><select id="quizCount"><option value="">Select number of questions</option></select></div>
+    </div>
+    <div class="quiz-available">
+      <b id="quizAvailable">0</b> questions available for this selection.
+    </div>
+    <div id="quizDataStatus" class="quiz-data-status"></div>
+    <div class="quiz-smart-note">🧩 <b>Smart Mix:</b> the quiz tries to balance different question types. If a type is unavailable, it fills from the remaining available types. The final order is randomized.</div>
+    <div class="quiz-actions">
+      <button class="btn primary" type="button" onclick="quizGenerate()">Generate Quiz →</button>
+      <button class="btn gray" type="button" onclick="document.getElementById('questions').scrollIntoView({behavior:'smooth'});location.hash='questions'">Open Question Bank</button>
+    </div>
+  </div>
+
+  <div id="quizPlayer" class="quiz-card" style="display:none">
+    <div class="quiz-player-head">
+      <div>
+        <h2 id="quizTitle">Weekly CA Quiz</h2>
+        <div id="quizMeta" class="quiz-meta"></div>
+      </div>
+      <div class="quiz-progress"><span id="quizProgress">0 / 0</span></div>
+    </div>
+    <form id="quizForm" onsubmit="event.preventDefault();quizSubmit();"></form>
+    <div class="quiz-actions">
+      <button class="btn gray" type="button" onclick="quizBackToSetup()">← Back to Setup</button>
+      <button class="btn primary" type="submit" form="quizForm">Submit Quiz ✓</button>
+    </div>
+    <div id="quizResult"></div>
+  </div>
+</section>
+
+<section id="questions" class="view">
+  <div class="page-head">
+    <div>
+      <h1>Question Bank</h1>
+      <p class="muted">Create, preview and manage SSC CGL current-affairs questions.</p>
+    </div>
+    <button class="primary" onclick="qbNew()">+ Add Question</button>
+  </div>
+
+  <div class="qb-stats">
+    <div class="stat"><b id="qbCount">0</b><span>Total Questions</span></div>
+    <div class="stat"><b id="qbCaCount">0</b><span>Current Affairs Used</span></div>
+  </div>
+
+  <div id="qbListView">
+    <div class="toolbar qb-list-filters">
+      <input id="qbSearch" placeholder="Search questions..." oninput="qbRenderList()">
+      <select id="qbFilterYear" onchange="qbListFilterChanged()">
+        <option value="">All Years</option>
+      </select>
+      <select id="qbFilterMonth" onchange="qbListFilterChanged()">
+        <option value="">All Months</option>
+      </select>
+      <select id="qbFilterWeek" onchange="qbRenderList()">
+        <option value="">All Weeks</option>
+      </select>
+      <select id="qbFilterType" onchange="qbRenderList()">
+        <option value="">All Types</option>
+        <option>Direct MCQ</option>
+        <option>Statement-Based</option>
+        <option>Match the Following</option>
+        <option>Concept + Current Affair</option>
+        <option>Numerical/Data</option>
+        <option>Multiple-Statement</option>
+        <option>True/False</option>
+      </select>
+      <select id="qbFilterDifficulty" onchange="qbRenderList()">
+        <option value="">All Difficulties</option>
+        <option>Easy</option><option>Moderate</option><option>Hard</option>
+      </select>
+    </div>
+    <div id="qbList"></div>
+  </div>
+
+  <div id="qbEditorView" style="display:none">
+    <div class="qb-layout">
+      <div class="card">
+        <div class="card-title">Question Information</div>
+
+        <label>Linked Current Affair <span class="muted">(optional)</span></label>
+        <div id="qbCaPicker" class="qb-ca-picker">
+          <div class="qb-ca-filters">
+            <select id="qbCaYear" onchange="qbCaFilterChanged()">
+              <option value="">All Years</option>
+            </select>
+            <select id="qbCaMonth" onchange="qbCaFilterChanged()">
+              <option value="">All Months</option>
+            </select>
+            <select id="qbCaWeek" onchange="qbCaFilterChanged()">
+              <option value="">All Weeks</option>
+            </select>
+          </div>
+          <input id="qbCaSearch" type="search" autocomplete="off"
+            placeholder="Search by title, date or category..."
+            oninput="qbPopulateCA('')">
+          <select id="qbCa" size="6" onchange="qbCaSelectedChanged()"></select>
+          <div id="qbCaSelected" class="qb-ca-selected" style="display:none">
+            <span id="qbCaSelectedText"></span>
+            <button type="button" onclick="qbClearCA()" title="Clear Current Affair">✕</button>
+          </div>
+        </div>
+        <div id="qbCaInfo" class="muted small">Optional — leave blank for a General Question.</div>
+
+        <label>Question Type *</label>
+        <select id="qbType" onchange="qbTypeChanged()">
+          <option>Direct MCQ</option>
+          <option>Statement-Based</option>
+          <option>Match the Following</option>
+          <option>Concept + Current Affair</option>
+          <option>Numerical/Data</option>
+          <option>Multiple-Statement</option>
+          <option>True/False</option>
+        </select>
+
+        <label>Difficulty *</label>
+        <select id="qbDifficulty">
+          <option>Easy</option><option selected>Moderate</option><option>Hard</option>
+        </select>
+
+        <label>Question *</label>
+        <textarea id="qbQuestion" rows="4" placeholder="Enter the question..." oninput="qbPreview()"></textarea>
+
+        <div id="qbDynamic"></div>
+
+        <label>Correct Answer *</label>
+        <div id="qbAnswerArea"></div>
+
+        <label>Explanation *</label>
+        <textarea id="qbExplanation" rows="4" placeholder="Explain why the answer is correct..." oninput="qbPreview()"></textarea>
+
+        <label>Exam Relevance <span class="muted">(optional)</span></label>
+        <textarea id="qbRelevance" rows="3" placeholder="Why is this useful for SSC CGL?"></textarea>
+
+        <div class="actions">
+          <button onclick="qbCancel()">Cancel</button>
+          <button onclick="qbSave(true)">Save & Add Another</button>
+          <button class="primary" onclick="qbSave(false)">Save Question</button>
+        </div>
+        <div id="qbMsg" class="small"></div>
+      </div>
+
+      <div class="card qb-preview-card">
+        <div class="card-title">Live Preview</div>
+        <div id="qbPreview" class="student-preview"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div></main></div>
+
+<script>
+const IDS=['title','date','week','cat','subcat','why','short','points','context','takeaway'];
+const $=id=>document.getElementById(id);
+let items=JSON.parse(localStorage.getItem('hca_studio_day4_items')||'[]');
+/* One-time migration from the earlier prototype.
+   IMPORTANT: old keys are never re-imported after the migration has run,
+   otherwise a deliberately deleted article could come back on refresh. */
+(function migrateOldItems(){
+  const migrationKey='hca_studio_day4_migration_v1_done';
+  if(localStorage.getItem(migrationKey)==='1') return;
+
+  const oldKeys=['hca_studio_items','hca_items_v2'];
+  let changed=false;
+
+  oldKeys.forEach(k=>{
+    try{
+      const old=JSON.parse(localStorage.getItem(k)||'[]');
+      if(Array.isArray(old)) old.forEach(o=>{
+        if(o && o.title && !items.some(x=>String(x.id)===String(o.id) || x.title===o.title)){
+          items.push(o);
+          changed=true;
+        }
+      });
+    }catch(e){}
+  });
+
+  if(changed) localStorage.setItem('hca_studio_day4_items',JSON.stringify(items));
+  localStorage.setItem(migrationKey,'1');
+})();
+let editingId=null,sortKey='date',selectedWeek='',selectedMonth='',publicMode='all';
+
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function toggle(id,a){$(id).classList.toggle('collapsed');$(a).textContent=$(id).classList.contains('collapsed')?'⌄':'⌃'}
+function setMode(mode){
+ const formPane=$('formPane'), previewPane=$('previewPane');
+ if(!formPane||!previewPane)return;
+
+ // Keep Form and Live Preview visible together on desktop.
+ // The buttons now act as focus controls rather than hiding either pane.
+ formPane.style.display='block';
+ previewPane.style.display='block';
+ previewPane.style.visibility='visible';
+ previewPane.style.opacity='1';
+
+ $('formBtn').classList.toggle('active',mode==='form');
+ $('previewBtn').classList.toggle('active',mode==='preview');
+
+ renderLive();
+
+ if(mode==='form'){
+   formPane.scrollIntoView({behavior:'smooth',block:'start'});
+ }else{
+   previewPane.scrollIntoView({behavior:'smooth',block:'start'});
+ }
+}
+function draft(){clearTimeout(window.dt);window.dt=setTimeout(()=>{let d={};IDS.forEach(x=>d[x]=$(x).value);localStorage.setItem('hca_studio_day4_draft',JSON.stringify(d));$('status').textContent='● Draft saved locally'},5000)}
+function counter(id,c,max){$(c).textContent=$(id).value.length+'/'+max;draft()}
+function weekFromDateString(v){
+ if(!v)return '';
+ const d=new Date(v+'T00:00:00');
+ if(Number.isNaN(d.getTime()))return '';
+ const day=d.getDay(); // Sunday=0, Monday=1...
+ const mondayOffset=(day+6)%7;
+ const monday=new Date(d);
+ monday.setDate(d.getDate()-mondayOffset);
+ const first=new Date(d.getFullYear(),d.getMonth(),1);
+ const firstDay=(first.getDay()+6)%7;
+ return 'Week '+(Math.floor((d.getDate()+firstDay-1)/7)+1);
+}
+function autoWeek(){
+ const v=$('date').value;
+ if(!v)return;
+ $('week').value=weekFromDateString(v);
+ draft();
+ renderLive();
+}
+function clearForm(){if(!confirm('Clear the current draft?'))return;newArticle()}
+function newArticle(){
+  IDS.forEach(x=>{
+    const el=$(x);
+    if(el) el.value='';
+  });
+  editingId=null;
+  localStorage.removeItem('hca_studio_day4_draft');
+  $('editorTitle').textContent='Add Current Affair';
+  $('status').textContent='● New article — ready to enter';
+  $('basic').classList.remove('collapsed');
+  $('content').classList.remove('collapsed');
+  $('exam').classList.remove('collapsed');
+  $('ba').textContent='⌃';
+  $('ca').textContent='⌃';
+  $('ea').textContent='⌃';
+  renderLive();
+}
+
+function saveItem(){
+ const required=['title','date','week','why','points','takeaway'];
+ const missing=required.filter(x=>{
+   const el=$(x);
+   return !el || !String(el.value||'').trim();
+ });
+ if(missing.length){
+   alert('Please complete the required fields: '+missing.join(', ')+'.');
+   return false;
+ }
+
+ const oldId=editingId;
+ const d={id:oldId==null?Date.now():oldId};
+ IDS.forEach(x=>{
+   const el=$(x);
+   d[x]=el?String(el.value||'').trim():'';
+ });
+ d.week=weekFromDateString(d.date) || d.week;
+
+ if(oldId!=null){
+   const index=items.findIndex(x=>String(x.id)===String(oldId));
+   if(index>=0){
+     items[index]=d;
+   }else{
+     // Defensive fallback if an old item has an unusual ID representation.
+     items.unshift(d);
+   }
+ }else{
+   items.unshift(d);
+ }
+
+ localStorage.setItem('hca_studio_day4_items',JSON.stringify(items));
+ localStorage.removeItem('hca_studio_day4_draft');
+ editingId=null;
+ $('editorTitle').textContent='Add Current Affair';
+ $('status').textContent='✓ Saved';
+
+ // Reset the editor for the next article. Do NOT call clearForm()
+ // here because clearForm() is intentionally confirmation-protected for
+ // manual clearing.
+ newArticle();
+ $('editorTitle').textContent='Add Current Affair';
+ $('status').textContent='✓ New article — ready to enter';
+ renderAll();
+ renderLive();
+
+ alert('Saved successfully. The article is now available in Weekly Collections and Public Preview. The form is ready for the next article.');
+ return false;
+}
+
+function editItem(id){
+ let d=items.find(x=>String(x.id)===String(id));
+ if(!d){alert('This current affair could not be found.');return;}
+ editingId=d.id;
+ IDS.forEach(x=>{
+   let el=$(x);
+   if(el)el.value=d[x]||'';
+ });
+ $('editorTitle').textContent='Edit Current Affair';
+ $('status').textContent='● Editing saved item';
+ show('editor',null);
+ setMode('form');
+ $('basic').classList.remove('collapsed');
+ $('content').classList.remove('collapsed');
+ $('exam').classList.remove('collapsed');
+ $('ba').textContent='⌃';
+ $('ca').textContent='⌃';
+ $('ea').textContent='⌃';
+ renderLive();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function deleteItem(id){
+ if(!confirm('Delete this article?'))return;
+ const target=String(id);
+ items=items.filter(x=>String(x.id)!==target);
+ localStorage.setItem('hca_studio_day4_items',JSON.stringify(items));
+ if(editingId!=null && String(editingId)===target){
+   editingId=null;
+   localStorage.removeItem('hca_studio_day4_draft');
+ }
+ renderAll();
+}
+function startNewCurrentAffair(el){
+  newArticle();
+  show('editor',el||document.querySelector('.side .nav'));
+  setMode('form');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function rememberView(id){
+ try{
+   localStorage.setItem('hca_studio_day4_view',id);
+   sessionStorage.setItem('hca_studio_day4_view',id);
+   window.name='HCA_VIEW:'+id;
+   location.hash=id;
+ }catch(e){}
+}
+function show(id,el){
+ const target=$(id);
+ if(!target)return;
+ document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+ target.classList.add('active');
+ document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
+ if(el)el.classList.add('active');
+ rememberView(id);
+ if(id==='saved')drawSaved();
+ if(id==='weekly')drawWeeks();
+ if(id==='public')drawPublic();
+ if(id==='editor')renderLive();
+}
+function populateCategoryFilter(){
+ let sel=$('categoryFilter');if(!sel)return;
+ let current=sel.value;
+ let cats=[...new Set(items.map(x=>x.cat).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+ sel.innerHTML='<option value="">All Categories</option>'+cats.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+ if(cats.includes(current))sel.value=current;
+}
+function clearFilters(){
+ $('search').value='';$('dateFilter').value='';$('categoryFilter').value='';$('sortFilter').value='newest';drawSaved();
+}
+function drawSaved(){
+ populateCategoryFilter();
+ let q=($('search')?.value||'').toLowerCase().trim();
+ let date=($('dateFilter')?.value||'');
+ let cat=($('categoryFilter')?.value||'');
+ let sort=($('sortFilter')?.value||'newest');
+ let arr=items.filter(x=>
+   (!q||String(x.title||'').toLowerCase().includes(q)) &&
+   (!date||String(x.date||'')===date) &&
+   (!cat||x.cat===cat)
+ );
+ arr.sort((a,b)=>{
+   if(sort==='oldest')return String(a.date).localeCompare(String(b.date));
+   if(sort==='category')return String(a.cat).localeCompare(String(b.cat))||String(a.title).localeCompare(String(b.title));
+   if(sort==='title')return String(a.title).localeCompare(String(b.title));
+   return String(b.date).localeCompare(String(a.date));
+ });
+ $('savedRows').innerHTML=arr.map(x=>`
+   <tr>
+     <td><b>${esc(x.title)}</b></td>
+     <td>${esc(x.date)}</td>
+     <td>${esc(weekFromDateString(x.date)||x.week||'')}</td>
+     <td>${esc(x.cat)}</td>
+     <td>
+       <button type="button" class="icon saved-edit" data-id="${esc(String(x.id))}" title="Edit current affair" aria-label="Edit current affair">✏️</button>
+       <button type="button" class="icon saved-delete" data-id="${esc(String(x.id))}" title="Delete current affair" aria-label="Delete current affair">🗑️</button>
+     </td>
+   </tr>`).join('')||
+   '<tr><td colspan="5" style="text-align:center;padding:30px;color:#667085">No saved items match these filters.</td></tr>';
+}
+
+document.addEventListener('submit',function(e){
+ const btn=e.submitter;
+ if(btn && btn.id==='saveCurrentAffairBtn'){
+   e.preventDefault();
+   saveItem();
+ }
+});
+document.addEventListener('click',function(e){
+ const edit=e.target.closest('.saved-edit');
+ if(edit){
+   e.preventDefault();
+   e.stopPropagation();
+   editItem(edit.dataset.id);
+   return;
+ }
+ const del=e.target.closest('.saved-delete');
+ if(del){
+   e.preventDefault();
+   e.stopPropagation();
+   deleteItem(del.dataset.id);
+ }
+});
+
+function drawWeeks(){
+ let months=[...new Set(items.map(x=>x.date).filter(Boolean).map(d=>d.slice(0,7)))].sort().reverse();
+ if(!selectedMonth) selectedMonth=months[0]||new Date().toISOString().slice(0,7);
+ $('monthSelect').innerHTML=months.length?months.map(m=>`<option value="${m}" ${m===selectedMonth?'selected':''}>${new Date(m+'-01T00:00:00').toLocaleString('en',{month:'long',year:'numeric'})}</option>`).join(''):'<option>No content yet</option>';
+ let monthItems=items.filter(x=>x.date&&x.date.slice(0,7)===selectedMonth);
+ let ws=['Week 1','Week 2','Week 3','Week 4','Week 5'];
+ $('weekCards').innerHTML=ws.map(w=>{let n=monthItems.filter(x=>(weekFromDateString(x.date)||x.week)===w).length;return `<div class="week"><h3>${w}</h3><small>${n} topic${n===1?'':'s'} saved</small><button class="btn primary" onclick="selectWeek('${w}')">Read Week →</button></div>`}).join('');
+ $('weekDetail').innerHTML=selectedWeek?weekHTML(selectedWeek):'<div class="empty">Choose a week above.</div>'
+}
+function selectWeek(w){selectedWeek=w;drawWeeks()}
+function weekHTML(w){let arr=items.filter(x=>(weekFromDateString(x.date)||x.week)===w && x.date && x.date.slice(0,7)===selectedMonth);if(!arr.length)return '<div class="empty">No saved content for this selection yet.</div>';return `<div class="card"><h3 style="margin-top:0">${w} · ${arr.length} Topics</h3>${arr.map(x=>`<div class="weekly-article-row" onclick="openPublic(${x.id})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPublic(${x.id})}"><div><b>${esc(x.title)}</b><div style="font-size:11px;color:#667085;margin-top:5px">${esc(x.date)} · ${esc(x.cat)}}</div></div><span class="read-arrow">Read →</span></div>`).join('')}</div>`}
+function lines(s,cls='revision-list'){let a=String(s||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);if(a.length<=1)return `<div style="line-height:1.6">${esc(a[0]||'')}</div>`;return `<ul class="${cls}">${a.map(x=>{let t=x.replace(/^[-•*]\s+/,'');let m=t.match(/^([^:]{1,60}):\s*(.*)$/);return m?`<li><b>${esc(m[1])}:</b> ${esc(m[2])}</li>`:`<li>${esc(t)}</li>`}).join('')}</ul>`}
+function publicFilter(mode){publicMode=mode;drawPublic()}
+function drawPublic(){
+ let months=[...new Set(items.map(x=>String(x.date||'').slice(0,7)).filter(Boolean))].sort().reverse();
+ let sel=$('publicMonth');
+ if(sel){
+   let current=sel.value;
+   sel.innerHTML='<option value="">All months</option>'+months.map(m=>`<option value="${m}">${new Date(m+'-01T00:00:00').toLocaleString('en-IN',{month:'long',year:'numeric'})}</option>`).join('');
+   if(months.includes(current))sel.value=current;
+ }
+ let month=sel?.value||'';
+ let arr=items.filter(x=>!month||String(x.date).startsWith(month))
+   .sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+ $('publicList').innerHTML=arr.length
+   ? `<div class="public-list">${arr.map(x=>`<div class="public-item" onclick="openPublic(${x.id})" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openPublic(${x.id})}">
+       <div class="public-meta">${esc(x.date)} · ${esc(weekFromDateString(x.date)||x.week||'')} · ${esc(x.cat)}</div>
+       <h3>${esc(x.title)}</h3>
+       <div class="public-meta">${esc(x.subcat||'')}</div>
+       <span class="read-arrow">Read →</span>
+     </div>`).join('')}</div>`
+   : '<div class="empty">No current affairs for this selection yet.</div>';
+ $('publicArticle').innerHTML='';
+}
+function articleHTML(x){return `<div class="preview-card"><div><span class="pill">${esc(x.cat)}</span><span class="pill">${esc(x.subcat||'')}</span></div><div style="color:#667085;font-size:11px;margin-top:9px">${esc(x.date)} · ${esc(weekFromDateString(x.date)||x.week||'')}</div><h2>${esc(x.title)}</h2><div class="why"><b>📣 Why in News?</b><br>${esc(x.why)}</div>${x.short?`<h3>⚡ In Short</h3><div class="short">${esc(x.short)}</div>`:""}<h3>📌 Key Points</h3>${lines(x.points,'points')}${x.context?`<h3>🔗 Important Past Context</h3><div class="context">${lines(x.context)}</div>`:''}<h3>🎯 SSC Takeaway</h3><div class="take"><b>Remember this:</b>${lines(x.takeaway)}</div><div class="actions"><button class="btn small">☆ Bookmark</button><button class="btn small">↓ PDF</button><button class="btn small primary">Start Weekly Quiz →</button></div></div>`}
+function renderLive(){
+ let d={};
+ IDS.forEach(x=>{let el=$(x);d[x]=el?el.value:''});
+ let target=$('livePreview');
+ if(!target)return;
+ try{
+   target.innerHTML=articleHTML(d);
+ }catch(err){
+   console.error('Live preview error:',err);
+   target.innerHTML='<div style="padding:18px;color:#b42318;background:#fff5f5;border:1px solid #fecdca;border-radius:8px"><b>Preview could not be rendered.</b><br>Please check the article fields.</div>';
+ }
+}
+function openPublic(id){
+ let x=items.find(a=>a.id===id);if(!x)return;
+ document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+ $('public').classList.add('active');
+ document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
+ let publicNav=[...document.querySelectorAll('.nav')].find(n=>n.textContent.includes('Public Preview'));
+ if(publicNav)publicNav.classList.add('active');
+ $('publicList').innerHTML='';
+ $('publicArticle').innerHTML=articleHTML(x);
+ $('publicArticle').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function normalizeSavedWeeks(){
+ let changed=false;
+ items.forEach(x=>{
+   if(x && x.date){
+     const correct=weekFromDateString(x.date);
+     if(correct && x.week!==correct){
+       x.week=correct;
+       changed=true;
+     }
+   }
+ });
+ if(changed) localStorage.setItem('hca_studio_day4_items',JSON.stringify(items));
+}
+function syncItemsFromStorage(){
+ try{
+   const raw=HCAStore.getRaw('hca_studio_day4_items');
+   items=raw?JSON.parse(raw):[];
+ }catch(e){
+   console.error('Could not read saved items:',e);
+   items=[];
+ }
+}
+function renderAll(){syncItemsFromStorage();normalizeSavedWeeks();drawSaved();drawWeeks();if($('public').classList.contains('active'))drawPublic();renderLive()}
+IDS.forEach(id=>$(id).addEventListener('input',()=>{draft();renderLive()}));
+function restoreLastView(){
+  const valid=['editor','saved','weekly','public','questions','quiz'];
+  let view='editor';
+  try{
+    const hash=(location.hash||'').slice(1);
+    const name=(window.name||'').replace(/^HCA_VIEW:/,'');
+    const ss=sessionStorage.getItem('hca_studio_day4_view')||'';
+    const ls=localStorage.getItem('hca_studio_day4_view')||'';
+    if(valid.includes(hash)) view=hash;
+    else if(valid.includes(name)) view=name;
+    else if(valid.includes(ss)) view=ss;
+    else if(valid.includes(ls)) view=ls;
+  }catch(e){}
+  const navs=[...document.querySelectorAll('.nav')];
+  const nav=navs.find(n=>{
+    const c=String(n.getAttribute('onclick')||'');
+    return c.includes("'"+view+"'") || c.includes('"'+view+'"');
+  });
+  show(view,nav);
+  if(view==='editor'){
+    try{setMode('form');renderLive();}catch(e){}
+  }
+  if(view==='quiz'){
+    try{if(typeof quizInit==='function')quizInit();}catch(e){}
+  }
+}
+function bootStudio(){
+  try{syncItemsFromStorage();normalizeSavedWeeks();}catch(e){console.error(e);}
+  restoreLastView();
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',bootStudio,{once:true});
+}else{
+  bootStudio();
+}
+window.addEventListener('pagehide',()=>{
+  try{
+    const active=document.querySelector('.view.active');
+    if(active&&active.id){
+      localStorage.setItem('hca_studio_day4_view',active.id);
+      sessionStorage.setItem('hca_studio_day4_view',active.id);
+      window.name='HCA_VIEW:'+active.id;
+    }
+  }catch(e){}
+});</script>
+
+<script>
+(function(){
+  function routeAfterRefresh(){
+    try{
+      var valid = ['editor','saved','weekly','public','questions','quiz'];
+      var hash = (location.hash || '').replace(/^#/, '');
+      var stored = localStorage.getItem('hca_studio_day4_view') || '';
+      var session = sessionStorage.getItem('hca_studio_day4_view') || '';
+      var view = valid.indexOf(hash) >= 0 ? hash :
+                 valid.indexOf(stored) >= 0 ? stored :
+                 valid.indexOf(session) >= 0 ? session : 'editor';
+
+      var target = document.getElementById(view);
+      if(!target) return;
+
+      document.querySelectorAll('.view').forEach(function(v){
+        v.classList.remove('active');
+      });
+      target.classList.add('active');
+
+      document.querySelectorAll('.nav').forEach(function(n){
+        n.classList.remove('active');
+      });
+      var nav = Array.from(document.querySelectorAll('.nav')).find(function(n){
+        var c = n.getAttribute('onclick') || '';
+        return c.indexOf("'" + view + "'") >= 0 || c.indexOf('"' + view + '"') >= 0;
+      });
+      if(nav) nav.classList.add('active');
+
+      if(view === 'saved' && typeof drawSaved === 'function') drawSaved();
+      if(view === 'weekly' && typeof drawWeeks === 'function') drawWeeks();
+      if(view === 'public' && typeof drawPublic === 'function') drawPublic();
+      if(view === 'editor' && typeof renderLive === 'function') renderLive();
+      if(view === 'questions' && typeof qbRenderList === 'function') qbRenderList();
+    }catch(e){
+      console.error('Router restore failed:', e);
+    }
+  }
+
+  // Run after the existing application boot has completed.
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){
+      setTimeout(routeAfterRefresh, 50);
+    }, {once:true});
+  }else{
+    setTimeout(routeAfterRefresh, 50);
+  }
+})();
+</script>
+
+
+
+
+<style>
+.qb-stats{display:flex;gap:14px;margin:18px 0}
+.qb-stats .stat{background:var(--card,#fff);border:1px solid var(--border,#ddd);border-radius:12px;padding:14px 18px;min-width:150px}
+.qb-stats .stat b{display:block;font-size:24px}.qb-stats .stat span{font-size:12px;color:#777}
+.qb-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:18px}
+.qb-preview-card{position:sticky;top:18px;height:max-content}
+.qb-preview-card .student-preview{border:1px solid var(--border,#ddd);border-radius:10px;padding:18px;background:#fff}
+.qb-list-item{border:1px solid var(--border,#ddd);border-radius:12px;padding:16px;margin:10px 0;background:var(--card,#fff)}
+.qb-list-item h3{margin:0 0 8px}.qb-meta{font-size:12px;color:#777;margin-bottom:10px}
+.qb-list-actions{display:flex;gap:8px}.qb-list-actions button{padding:7px 11px}
+.qb-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.qb-match-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0}
+.qb-statement{display:flex;gap:8px;align-items:flex-start;margin:8px 0}
+.qb-empty{padding:28px;text-align:center;color:#777;border:1px dashed #bbb;border-radius:12px}
+@media(max-width:850px){.qb-layout{grid-template-columns:1fr}.qb-preview-card{position:static}}
+</style>
+
+
+
+<style id="hca-v48-data-style">
+.hca-v48-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px;justify-content:flex-end}
+.hca-v48-tools button,.hca-file-btn{border:1px solid #cfd6df;background:#fff;border-radius:8px;padding:7px 10px;font-size:12px;cursor:pointer}
+.hca-v48-badge{font-size:11px;font-weight:700;letter-spacing:.04em;padding:7px 9px;border-radius:8px;background:#eef6ff;border:1px solid #cfe2ff}
+.hca-file-btn input{display:none}
+.quiz-data-status{margin-top:12px;padding:9px 11px;border-radius:8px;font-size:13px;border:1px solid #ddd}
+.quiz-data-status.ok{background:#f2fbf4;border-color:#bfe2c5}
+.quiz-data-status.warn{background:#fff8e8;border-color:#ecd28a}
+@media(max-width:850px){.hca-v48-tools{justify-content:flex-start}}
+</style>
+
+<script id="hca-v48-bootstrap">
+/* V48 portable data snapshot. A downloaded Portable App Copy replaces this object with the current data. */
+const HCA_BOOTSTRAP = {questions:[], currentAffairs:[]};
+const HCA_DATA_VERSION = 48;
+</script>
+
+<script id="hca-v48-persistence-manager">
+(function(){
+  const QB_KEY='hca_question_bank_v1';
+  const CA_KEY='hca_studio_day4_items';
+  const BOOT_KEY='hca_v48_bootstrapped_v1';
+  const hasLS=()=>{try{const x='__hca_test__';localStorage.setItem(x,'1');localStorage.removeItem(x);return true}catch(e){return false}};
+  const hasSS=()=>{try{const x='__hca_test__';sessionStorage.setItem(x,'1');sessionStorage.removeItem(x);return true}catch(e){return false}};
+  function getRaw(key){
+    try{ if(hasLS()){ const v=localStorage.getItem(key); if(v!==null) return v; } }catch(e){}
+    try{ if(hasSS()) return sessionStorage.getItem(key); }catch(e){}
+    return null;
+  }
+  function setRaw(key,value){
+    try{ if(hasLS()){localStorage.setItem(key,value);return true;} }catch(e){}
+    try{ if(hasSS()){sessionStorage.setItem(key,value);return true;} }catch(e){}
+    return false;
+  }
+  function removeRaw(key){try{localStorage.removeItem(key)}catch(e){} try{sessionStorage.removeItem(key)}catch(e){}}
+  function parseArray(raw){try{const x=JSON.parse(raw||'[]');return Array.isArray(x)?x:[]}catch(e){return []}}
+  function bootstrap(){
+    try{
+      if(getRaw(BOOT_KEY)==='1') return;
+      const q=parseArray(getRaw(QB_KEY));
+      const ca=parseArray(getRaw(CA_KEY));
+      const b=window.HCA_BOOTSTRAP||{};
+      if(!q.length && Array.isArray(b.questions) && b.questions.length) setRaw(QB_KEY,JSON.stringify(b.questions));
+      if(!ca.length && Array.isArray(b.currentAffairs) && b.currentAffairs.length) setRaw(CA_KEY,JSON.stringify(b.currentAffairs));
+      setRaw(BOOT_KEY,'1');
+    }catch(e){console.warn('V48 bootstrap failed',e)}
+  }
+  bootstrap();
+  window.HCAStore={getRaw,setRaw,removeRaw,parseArray,bootstrap,keys:{QB_KEY,CA_KEY,BOOT_KEY}};
+
+  function currentData(){
+    return {
+      format:'HCA-V48-DATA', version:48, exportedAt:new Date().toISOString(),
+      questions:parseArray(getRaw(QB_KEY)),
+      currentAffairs:parseArray(getRaw(CA_KEY))
+    };
+  }
+  function download(name,text,type){
+    const blob=new Blob([text],{type}); const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click();
+    setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1000);
+  }
+  function exportJSON(){
+    const d=currentData(); download('HCA_V48_Backup.json',JSON.stringify(d,null,2),'application/json');
+    alert('Backup exported. Keep this JSON file safe.');
+  }
+  function importJSON(file){
+    if(!file)return;
+    const r=new FileReader();
+    r.onload=function(){
+      try{
+        const x=JSON.parse(r.result);
+        const questions=Array.isArray(x)?x:(Array.isArray(x.questions)?x.questions:[]);
+        const ca=Array.isArray(x.currentAffairs)?x.currentAffairs:[];
+        if(!questions.length && !ca.length) throw new Error('No question/current-affair data found');
+        if(!confirm('Import '+questions.length+' questions and '+ca.length+' current-affair records? Existing data will be replaced.')) return;
+        setRaw(QB_KEY,JSON.stringify(questions));
+        if(Array.isArray(x.currentAffairs)) setRaw(CA_KEY,JSON.stringify(ca));
+        setRaw(BOOT_KEY,'1');
+        alert('Import complete. Reloading V48 now.'); location.reload();
+      }catch(e){alert('Could not import this backup: '+e.message)}
+    }; r.readAsText(file);
+  }
+  function migrate(){
+    const q=parseArray(getRaw(QB_KEY)), ca=parseArray(getRaw(CA_KEY));
+    if(!q.length && !ca.length){
+      alert('No existing V47 question/current-affair data is visible to this browser file. Use Export Data from the old app, then Import Data here.');
+      return;
+    }
+    setRaw(QB_KEY,JSON.stringify(q)); setRaw(CA_KEY,JSON.stringify(ca)); setRaw(BOOT_KEY,'1');
+    alert('Existing data detected and secured for V48. Reloading.'); location.reload();
+  }
+  function portableCopy(){
+    const d=currentData();
+    let html='';
+    try{html='<!doctype html>\n'+document.documentElement.outerHTML}catch(e){alert('Could not create the portable copy.');return}
+    const safe=JSON.stringify({questions:d.questions,currentAffairs:d.currentAffairs}).replace(/</g,'\\u003C');
+    html=html.replace(/const HCA_BOOTSTRAP = \{questions:\[\], currentAffairs:\[\]\};/, 'const HCA_BOOTSTRAP = '+safe+';');
+    download('healthy_current_affairs_studio_V48_PORTABLE.html',html,'text/html');
+    alert('Portable V48 copy created with '+d.questions.length+' questions and '+d.currentAffairs.length+' current-affair records embedded inside it.');
+  }
+  window.hcaV48={exportJSON,importJSON,migrate,portableCopy};
+  document.addEventListener('DOMContentLoaded',function(){
+    const host=document.querySelector('#questions .page-head');
+    if(host && !document.getElementById('hcaV48DataTools')){
+      const box=document.createElement('div'); box.id='hcaV48DataTools'; box.className='hca-v48-tools';
+      box.innerHTML='<span class="hca-v48-badge">V48 DATA SAFE</span><button type="button" onclick="hcaV48.migrate()">Migrate Existing Data</button><button type="button" onclick="hcaV48.exportJSON()">Export Backup</button><label class="hca-file-btn">Import Backup<input type="file" accept="application/json,.json" style="display:none"></label><button type="button" onclick="hcaV48.portableCopy()">Create Portable App Copy</button>';
+      host.appendChild(box);
+      const input=box.querySelector('input[type=file]'); input.addEventListener('change',e=>hcaV48.importJSON(e.target.files[0]));
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+const QB_KEY='hca_question_bank_v1';
+let qbItems=[];
+let qbEditingId=null;
+
+function qbLoad(){
+  try{qbItems=HCAStore.parseArray(HCAStore.getRaw(QB_KEY));}catch(e){qbItems=[]}
+}
+function qbPersist(){HCAStore.setRaw(QB_KEY,JSON.stringify(qbItems))}
+function qbId(){return 'Q'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).slice(2,5).toUpperCase()}
+function qbEsc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function qbCAItems(){
+  try{
+    const raw=HCAStore.getRaw('hca_studio_day4_items');
+    const arr=raw?JSON.parse(raw):[];
+    return Array.isArray(arr)?arr:[];
+  }catch(e){return []}
+}
+function qbCurrentCA(id){
+  return qbCAItems().find(x=>String(x.id)===String(id));
+}
+function qbWeek(date){
+  if(!date)return '';
+  const d=new Date(date+'T00:00:00');
+  if(Number.isNaN(d.getTime()))return '';
+  const first=new Date(d.getFullYear(),d.getMonth(),1);
+  const firstDay=(first.getDay()+6)%7;
+  return 'Week '+(Math.floor((d.getDate()+firstDay-1)/7)+1);
+}
+function qbCaPopulateYears(){
+  const yearEl=document.getElementById('qbCaYear');
+  if(!yearEl)return;
+  const current=yearEl.value;
+  const years=[...new Set(qbCAItems()
+    .map(x=>String(x.date||'').slice(0,4))
+    .filter(y=>/^\d{4}$/.test(y)))]
+    .sort((a,b)=>Number(b)-Number(a));
+  yearEl.innerHTML='<option value="">All Years</option>'+
+    years.map(y=>`<option value="${qbEsc(y)}">${qbEsc(y)}</option>`).join('');
+  if(years.includes(current))yearEl.value=current;
+  qbCaPopulateMonths();
+}
+
+function qbCaPopulateMonths(){
+  const year=String(document.getElementById('qbCaYear')?.value||'');
+  const monthEl=document.getElementById('qbCaMonth');
+  if(!monthEl)return;
+  const current=monthEl.value;
+  const months=[...new Set(qbCAItems()
+    .filter(x=>!year||String(x.date||'').slice(0,4)===year)
+    .map(x=>String(x.date||'').slice(0,7))
+    .filter(m=>/^\d{4}-\d{2}$/.test(m)))]
+    .sort().reverse();
+
+  monthEl.innerHTML='<option value="">All Months</option>'+
+    months.map(m=>{
+      const d=new Date(m+'-01T00:00:00');
+      const label=isNaN(d.getTime())?m:d.toLocaleString('en-IN',{month:'long'});
+      const y=m.slice(0,4);
+      return `<option value="${qbEsc(m)}">${qbEsc(label+' '+y)}</option>`;
+    }).join('');
+
+  if(months.includes(current))monthEl.value=current;
+  else monthEl.value='';
+  qbCaPopulateWeeks();
+}
+
+function qbCaPopulateWeeks(){
+  const year=String(document.getElementById('qbCaYear')?.value||'');
+  const month=String(document.getElementById('qbCaMonth')?.value||'');
+  const weekEl=document.getElementById('qbCaWeek');
+  if(!weekEl)return;
+  const current=weekEl.value;
+
+  const weeks=[...new Set(qbCAItems()
+    .filter(x=>{
+      const d=String(x.date||'');
+      const xYear=d.slice(0,4);
+      const xMonth=d.slice(0,7);
+      return (!year||xYear===year) && (!month||xMonth===month);
+    })
+    .map(x=>qbWeek(x.date)||x.week||'')
+    .filter(Boolean))]
+    .sort((a,b)=>{
+      const na=Number(String(a).replace(/\D/g,'')), nb=Number(String(b).replace(/\D/g,''));
+      return na-nb;
+    });
+
+  weekEl.innerHTML='<option value="">All Weeks</option>'+
+    weeks.map(w=>`<option value="${qbEsc(w)}">${qbEsc(w)}</option>`).join('');
+  if(weeks.includes(current))weekEl.value=current;
+  else weekEl.value='';
+}
+
+function qbCaFilterChanged(){
+  // Rebuild dependent filters without losing the user's selected year/month.
+  qbCaPopulateYears();
+  qbPopulateCA('');
+}
+
+function qbPopulateCA(selected){
+  const el=document.getElementById('qbCa'); if(!el)return;
+  const search=document.getElementById('qbCaSearch');
+  const year=String(document.getElementById('qbCaYear')?.value||'');
+  const month=String(document.getElementById('qbCaMonth')?.value||'');
+  const week=String(document.getElementById('qbCaWeek')?.value||'');
+  const q=String(search?.value||'').trim().toLowerCase();
+
+  // No filters/search = General Question mode; don't show a huge list.
+  if(!q && !year && !month && !week && !selected){
+    el.innerHTML='';
+    el.value='';
+    el.style.display='none';
+    qbCaChanged();
+    return;
+  }
+
+  const arr=qbCAItems()
+    .sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')))
+    .filter(x=>{
+      const xDate=String(x.date||'');
+      const xYear=xDate.slice(0,4);
+      const xMonth=xDate.slice(0,7);
+      const xWeek=qbWeek(x.date)||x.week||'';
+      const hay=[x.title,x.date,x.cat,x.category,x.week].filter(Boolean).join(' ').toLowerCase();
+      return (!year||xYear===year) &&
+             (!month||xMonth===month) &&
+             (!week||xWeek===week) &&
+             (!q||hay.includes(q));
+    });
+
+  el.innerHTML=arr.map(x=>`<option value="${qbEsc(x.id)}">${qbEsc(x.title||'Untitled')} — ${qbEsc(x.date||'')}</option>`).join('');
+
+  if(selected && arr.some(x=>String(x.id)===String(selected))){
+    el.value=selected;
+    el.style.display='';
+  }else{
+    el.value='';
+    el.style.display=(q||year||month||week) ? '' : 'none';
+  }
+  qbCaChanged();
+}
+function qbCaSelectedChanged(){
+  const el=document.getElementById('qbCa');
+  const search=document.getElementById('qbCaSearch');
+  const selectedBox=document.getElementById('qbCaSelected');
+  const selectedText=document.getElementById('qbCaSelectedText');
+  const opt=el?.options[el.selectedIndex];
+
+  // "No Current Affair" keeps the search UI available.
+  if(!opt || !opt.value){
+    qbClearCA();
+    return;
+  }
+
+  const fullText=opt.textContent.trim();
+  if(search) search.value=fullText;
+  if(selectedText) selectedText.textContent=fullText;
+  if(selectedBox) selectedBox.style.display='flex';
+
+  // Hide the search/results once a CA has been selected.
+  if(search) search.style.display='none';
+  if(el) el.style.display='none';
+
+  qbCaChanged();
+}
+function qbClearCA(){
+  const el=document.getElementById('qbCa');
+  const search=document.getElementById('qbCaSearch');
+  const selectedBox=document.getElementById('qbCaSelected');
+  const selectedText=document.getElementById('qbCaSelectedText');
+
+  if(el) el.value='';
+  if(selectedText) selectedText.textContent='';
+  if(selectedBox) selectedBox.style.display='none';
+  if(search){
+    search.value='';
+    search.style.display='';
+  }
+  const yearEl=document.getElementById('qbCaYear');
+  const monthEl=document.getElementById('qbCaMonth');
+  const weekEl=document.getElementById('qbCaWeek');
+  if(yearEl) yearEl.value='';
+  if(monthEl) monthEl.value='';
+  if(weekEl) weekEl.value='';
+  if(el){
+    el.value='';
+    el.style.display='none';
+    el.innerHTML='';
+  }
+  qbCaChanged();
+}
+function qbCaChanged(){
+  const x=qbCurrentCA(document.getElementById('qbCa')?.value);
+  const info=document.getElementById('qbCaInfo');
+  if(!info)return;
+  info.textContent=x ? `${x.date||''} · ${qbWeek(x.date)||x.week||''} · ${x.cat||x.category||''}` : 'No Current Affair linked — this can be a general MCQ.';
+  qbPreview();
+}
+function qbTypeChanged(){
+  const type=document.getElementById('qbType').value;
+  const dyn=document.getElementById('qbDynamic');
+  const ans=document.getElementById('qbAnswerArea');
+
+  if(type==='Direct MCQ'||type==='Numerical/Data'||type==='Concept + Current Affair'){
+    dyn.innerHTML=`
+      <label>Answer Choices <span class="qb-help">(shown to aspirants)</span> *</label>
+      <div class="qb-row"><input id="qboA" placeholder="Option A" oninput="qbPreview()"><input id="qboB" placeholder="Option B" oninput="qbPreview()"></div>
+      <div class="qb-row"><input id="qboC" placeholder="Option C" oninput="qbPreview()"><input id="qboD" placeholder="Option D" oninput="qbPreview()"></div>`;
+    ans.innerHTML=`
+      <label>Correct Answer <span class="qb-help">(select the right choice)</span> *</label>
+      <div class="qb-correct-grid">
+        <label><input type="radio" name="qbCorrect" value="A" onchange="qbPreview()"> A</label>
+        <label><input type="radio" name="qbCorrect" value="B" onchange="qbPreview()"> B</label>
+        <label><input type="radio" name="qbCorrect" value="C" onchange="qbPreview()"> C</label>
+        <label><input type="radio" name="qbCorrect" value="D" onchange="qbPreview()"> D</label>
+      </div>`;
+  } else if(type==='Statement-Based'||type==='Multiple-Statement'){
+    dyn.innerHTML=`
+      <label>Statements <span class="qb-help">(shown to aspirants)</span> *</label>
+      <div id="qbStatements"></div>
+      <button type="button" onclick="qbAddStatement()">+ Add Statement</button>
+      <label>Answer Choices <span class="qb-help">(shown to aspirants)</span> *</label>
+      <div class="qb-row">
+        <input id="qboA" value="1 only" oninput="qbPreview()">
+        <input id="qboB" value="1 and 2 only" oninput="qbPreview()">
+      </div>
+      <div class="qb-row">
+        <input id="qboC" value="2 and 3 only" oninput="qbPreview()">
+        <input id="qboD" value="1, 2 and 3" oninput="qbPreview()">
+      </div>`;
+    ans.innerHTML=`
+      <label>Correct Answer <span class="qb-help">(select the right choice)</span> *</label>
+      <div class="qb-correct-grid">
+        <label><input type="radio" name="qbCorrect" value="A" onchange="qbPreview()"> A</label>
+        <label><input type="radio" name="qbCorrect" value="B" onchange="qbPreview()"> B</label>
+        <label><input type="radio" name="qbCorrect" value="C" onchange="qbPreview()"> C</label>
+        <label><input type="radio" name="qbCorrect" value="D" onchange="qbPreview()"> D</label>
+      </div>`;
+    document.getElementById('qbStatements').innerHTML='';
+    qbAddStatement();qbAddStatement();qbAddStatement();
+  } else if(type==='True/False'){
+    dyn.innerHTML=`
+      <label>Answer Choices <span class="qb-help">(shown to aspirants)</span> *</label>
+      <div class="qb-row"><input id="qboA" value="True" oninput="qbPreview()"><input id="qboB" value="False" oninput="qbPreview()"></div>`;
+    ans.innerHTML=`
+      <label>Correct Answer <span class="qb-help">(select the right choice)</span> *</label>
+      <div class="qb-correct-grid">
+        <label><input type="radio" name="qbCorrect" value="A" onchange="qbPreview()"> A — True</label>
+        <label><input type="radio" name="qbCorrect" value="B" onchange="qbPreview()"> B — False</label>
+      </div>`;
+  } else if(type==='Match the Following'){
+    dyn.innerHTML=`
+      <label>Matching Lists <span class="qb-help">(shown to aspirants)</span> *</label>
+      <div id="qbMatches"></div>
+      <button type="button" onclick="qbAddMatch()">+ Add Row</button>
+
+      <label>Answer Choices <span class="qb-help">(shown to aspirants)</span> *</label>
+      <div class="qb-row">
+        <input id="qboA" placeholder="Option A — e.g. 1-A, 2-B, 3-C" oninput="qbPreview()">
+        <input id="qboB" placeholder="Option B — e.g. 1-B, 2-C, 3-A" oninput="qbPreview()">
+      </div>
+      <div class="qb-row">
+        <input id="qboC" placeholder="Option C — e.g. 1-C, 2-A, 3-B" oninput="qbPreview()">
+        <input id="qboD" placeholder="Option D — e.g. 1-B, 2-A, 3-C" oninput="qbPreview()">
+      </div>`;
+    ans.innerHTML=`
+      <label>Correct Answer <span class="qb-help">(select the correct matching)</span> *</label>
+      <div class="qb-correct-grid">
+        <label><input type="radio" name="qbCorrect" value="A" onchange="qbPreview()"> A</label>
+        <label><input type="radio" name="qbCorrect" value="B" onchange="qbPreview()"> B</label>
+        <label><input type="radio" name="qbCorrect" value="C" onchange="qbPreview()"> C</label>
+        <label><input type="radio" name="qbCorrect" value="D" onchange="qbPreview()"> D</label>
+      </div>`;
+    qbAddMatch();qbAddMatch();qbAddMatch();
+  }
+
+  const q=document.getElementById('qbQuestion');
+  if(q && (type==='Statement-Based'||type==='Multiple-Statement')){
+    q.placeholder='Enter the question/instruction...';
+  }else if(q){
+    q.placeholder='Enter the question...';
+  }
+  qbPreview();
+}
+
+function qbAddStatement(value=''){
+  const box=document.getElementById('qbStatements');if(!box)return;
+  const n=box.children.length+1;
+  const row=document.createElement('div');row.className='qb-statement';
+  row.innerHTML=`<b>${n}.</b><input class="qb-stmt" value="${qbEsc(value)}" placeholder="Enter statement ${n}" oninput="qbPreview()">`;
+  box.appendChild(row);qbPreview();
+}
+function qbAddMatch(a='',b=''){
+  const box=document.getElementById('qbMatches');if(!box)return;
+  const n=box.children.length+1;
+  const row=document.createElement('div');row.className='qb-match-row';
+  row.innerHTML=`<input class="qb-match-a" value="${qbEsc(a)}" placeholder="List I item ${n}" oninput="qbPreview()">
+                 <input class="qb-match-b" value="${qbEsc(b)}" placeholder="List II item ${n}" oninput="qbPreview()">`;
+  box.appendChild(row);qbPreview();
+}
+function qbAnswers(){
+  return document.querySelector('input[name="qbCorrect"]:checked')?.value||'';
+}
+function qbOptions(){
+  return ['A','B','C','D'].map(k=>document.getElementById('qbo'+k)?.value||'');
+}
+function qbStructure(){
+  const type=document.getElementById('qbType').value;
+  if(type==='Statement-Based'||type==='Multiple-Statement'){
+    return {
+      statements:[...document.querySelectorAll('.qb-stmt')].map(x=>x.value.trim()).filter(Boolean),
+      options:qbOptions()
+    };
+  }
+  if(type==='Match the Following'){
+    return {
+      matches:[...document.querySelectorAll('.qb-match-row')].map(r=>({
+        left:r.querySelector('.qb-match-a')?.value.trim()||'',
+        right:r.querySelector('.qb-match-b')?.value.trim()||''
+      })).filter(r=>r.left||r.right),
+      options:qbOptions()
+    };
+  }
+  return qbOptions();
+}
+
+function qbPreview(){
+  const box=document.getElementById('qbPreview');if(!box)return;
+  const type=document.getElementById('qbType')?.value||'Direct MCQ';
+  const q=document.getElementById('qbQuestion')?.value.trim()||'';
+  const esc=qbEsc;
+  let body='<div class="qb-student-question">';
+
+  if(q){
+    body+=`<div class="qb-student-stem">${esc(q).replace(/\n/g,'<br>')}</div>`;
+  }else{
+    body+='<div class="qb-student-placeholder">Your question will appear here.</div>';
+  }
+
+  if(type==='Statement-Based'||type==='Multiple-Statement'){
+    const ss=[...document.querySelectorAll('.qb-stmt')].map(x=>x.value.trim()).filter(Boolean);
+    if(ss.length){
+      body+='<div class="qb-student-statements">';
+      ss.forEach((s,i)=>{
+        body+=`<div class="qb-student-statement"><span class="qb-no">${i+1}.</span><span>${esc(s)}</span></div>`;
+      });
+      body+='</div>';
+      if(q) body+='<div class="qb-student-instruction">Which of the statements given above is/are correct?</div>';
+    }
+  } else if(type==='True/False'){
+    body+='<div class="qb-student-instruction">Choose True or False.</div>';
+  } else if(type==='Match the Following'){
+    const rows=[...document.querySelectorAll('.qb-match-row')];
+    if(rows.length){
+      body+='<table class="qb-student-match">';
+      rows.forEach((r,i)=>{
+        body+=`<tr><td>${i+1}. ${esc(r.querySelector('.qb-match-a')?.value||'')}</td><td>${String.fromCharCode(65+i)}. ${esc(r.querySelector('.qb-match-b')?.value||'')}</td></tr>`;
+      });
+      body+='</table>';
+      body+='<div class="qb-student-instruction">Choose the correct code:</div>';
+    }
+  }
+
+  const opts=qbOptions().slice(0,4);
+  body+='<div class="qb-student-choices">';
+  opts.forEach((o,i)=>{
+    if(o.trim()) body+=`<div class="qb-student-choice"><span class="qb-circle">○</span><span><b>${String.fromCharCode(65+i)}.</b> ${esc(o)}</span></div>`;
+  });
+  body+='</div></div>';
+  box.innerHTML=body;
+}
+
+function qbNew(){
+  qbEditingId=null;
+  document.getElementById('qbListView').style.display='none';
+  document.getElementById('qbEditorView').style.display='block';
+  document.getElementById('qbQuestion').value='';
+  document.getElementById('qbExplanation').value='';
+  document.getElementById('qbRelevance').value='';
+  document.getElementById('qbType').value='Direct MCQ';
+
+  // Start with the full Current Affair list, then let the search box
+  // filter it instantly without requiring the user to reopen Add Question.
+  qbClearCA();
+  qbCaPopulateYears();
+  const caSearch=document.getElementById('qbCaSearch');
+  if(caSearch) caSearch.value='';
+  qbPopulateCA('');
+
+  qbTypeChanged();
+  document.getElementById('qbMsg').textContent='';
+
+  // Put the cursor directly in the CA search box.
+  if(caSearch){
+    setTimeout(()=>caSearch.focus(),0);
+  }
+}
+function qbCancel(){
+  document.getElementById('qbEditorView').style.display='none';
+  document.getElementById('qbListView').style.display='block';
+  qbRenderList();
+}
+function qbSave(addAnother){
+  const caId=document.getElementById('qbCa').value;
+  const type=document.getElementById('qbType').value;
+  const q=document.getElementById('qbQuestion').value.trim();
+  const explanation=document.getElementById('qbExplanation').value.trim();
+  const answer=qbAnswers();
+  if(!q||!explanation||!answer){
+    document.getElementById('qbMsg').textContent='Please complete the question, correct answer and explanation. Linking a Current Affair is optional.';
+    return;
+  }
+  const structure=qbStructure();
+  if((Array.isArray(structure)&&structure.length===0)){
+    document.getElementById('qbMsg').textContent='Please add the question structure/options.';
+    return;
+  }
+  const ca=qbCurrentCA(caId);
+  const item={
+    id:qbEditingId||qbId(),
+    caId,type,
+    difficulty:document.getElementById('qbDifficulty').value,
+    category:ca?.cat||ca?.category||'Miscellaneous',
+    question:q,
+    structure,
+    answer,
+    explanation,
+    relevance:document.getElementById('qbRelevance').value.trim(),
+    createdAt:qbEditingId ? (qbItems.find(x=>x.id===qbEditingId)?.createdAt||new Date().toISOString()) : new Date().toISOString(),
+    updatedAt:new Date().toISOString()
+  };
+  const idx=qbItems.findIndex(x=>x.id===item.id);
+  if(idx>=0)qbItems[idx]=item;else qbItems.unshift(item);
+  qbPersist();
+  document.getElementById('qbMsg').textContent='Question saved.';
+  if(addAnother)qbNew();else qbCancel();
+}
+function qbEdit(id){
+  const x=qbItems.find(q=>q.id===id);if(!x)return;
+  qbEditingId=id;
+  document.getElementById('qbListView').style.display='none';
+  document.getElementById('qbEditorView').style.display='block';
+
+  // When editing a linked Current Affair, restore its Year / Month / Week
+  // filters automatically. The user should not have to search for the same
+  // Current Affair again just to edit the question.
+  qbClearCA();
+  if(x.caId){
+    const ca=qbCurrentCA(x.caId);
+    const date=String(ca?.date||'');
+    const year=date.slice(0,4);
+    const month=date.slice(0,7);
+    const week=qbWeek(date)||ca?.week||'';
+
+    qbCaPopulateYears();
+    const yearEl=document.getElementById('qbCaYear');
+    if(yearEl && year) yearEl.value=year;
+
+    qbCaPopulateMonths();
+    const monthEl=document.getElementById('qbCaMonth');
+    if(monthEl && month) monthEl.value=month;
+
+    qbCaPopulateWeeks();
+    const weekEl=document.getElementById('qbCaWeek');
+    if(weekEl && week) weekEl.value=week;
+
+    // Show the selected Current Affair immediately, using the restored
+    // filters. No re-searching is required.
+    qbPopulateCA(x.caId);
+
+    const el=document.getElementById('qbCa');
+    if(el){
+      const opt=Array.from(el.options).find(o=>String(o.value)===String(x.caId));
+      if(opt){
+        el.value=x.caId;
+        qbCaSelectedChanged();
+      }
+    }
+  }else{
+    qbCaPopulateYears();
+    qbPopulateCA('');
+  }
+  document.getElementById('qbType').value=x.type;
+  document.getElementById('qbDifficulty').value=x.difficulty;
+  document.getElementById('qbQuestion').value=x.question;
+  document.getElementById('qbExplanation').value=x.explanation;
+  document.getElementById('qbRelevance').value=x.relevance||'';
+  qbTypeChanged();
+  if(x.type==='Direct MCQ'||x.type==='Numerical/Data'||x.type==='Concept + Current Affair'||x.type==='True/False'){
+    ['A','B','C','D'].forEach((k,i)=>{const el=document.getElementById('qbo'+k);if(el)el.value=x.structure[i]||''});
+    const r=document.querySelector(`input[name="qbCorrect"][value="${CSS.escape(x.answer)}"]`);if(r)r.checked=true;
+  }else if(x.type==='Statement-Based'||x.type==='Multiple-Statement'){
+    const box=document.getElementById('qbStatements');box.innerHTML='';
+    const ss=Array.isArray(x.structure) ? x.structure : (x.structure?.statements||[]);
+    ss.forEach(s=>qbAddStatement(s));
+    const opts=Array.isArray(x.structure) ? [] : (x.structure?.options||[]);
+    ['A','B','C','D'].forEach((k,i)=>{
+      const el=document.getElementById('qbo'+k);
+      if(el && opts[i]!==undefined) el.value=opts[i];
+    });
+    const r=[...document.querySelectorAll('input[name="qbCorrect"]')].find(r=>r.value===x.answer);if(r)r.checked=true;
+  }else{
+    const box=document.getElementById('qbMatches');box.innerHTML='';
+    const matches=Array.isArray(x.structure) ? x.structure : (x.structure?.matches||[]);
+    matches.forEach(r=>qbAddMatch(r.left,r.right));
+    const opts=Array.isArray(x.structure) ? [] : (x.structure?.options||[]);
+    ['A','B','C','D'].forEach((k,i)=>{
+      const el=document.getElementById('qbo'+k);
+      if(el && opts[i]!==undefined) el.value=opts[i];
+    });
+    const r=[...document.querySelectorAll('input[name="qbCorrect"]')].find(r=>r.value===x.answer);
+    if(r) r.checked=true;
+  }
+  qbPreview();
+}
+function qbDelete(id){
+  if(!confirm('Delete this question?'))return;
+  qbItems=qbItems.filter(x=>x.id!==id);qbPersist();qbRenderList();
+}
+function qbListPopulateYears(){
+  const el=document.getElementById('qbFilterYear'); if(!el)return;
+  const current=el.value;
+  const years=[...new Set(qbCAItems()
+    .map(x=>String(x.date||'').slice(0,4))
+    .filter(y=>/^\d{4}$/.test(y)))]
+    .sort((a,b)=>Number(b)-Number(a));
+  el.innerHTML='<option value="">All Years</option>'+
+    years.map(y=>`<option value="${qbEsc(y)}">${qbEsc(y)}</option>`).join('');
+  if(years.includes(current))el.value=current;
+  qbListPopulateMonths();
+}
+
+function qbListPopulateMonths(){
+  const year=String(document.getElementById('qbFilterYear')?.value||'');
+  const el=document.getElementById('qbFilterMonth'); if(!el)return;
+  const current=el.value;
+  const months=[...new Set(qbCAItems()
+    .filter(x=>!year||String(x.date||'').slice(0,4)===year)
+    .map(x=>{
+      const d=String(x.date||'');
+      return /^\d{4}-\d{2}-\d{2}$/.test(d) ? d.slice(0,7) : '';
+    })
+    .filter(Boolean))]
+    .sort((a,b)=>b.localeCompare(a));
+  el.innerHTML='<option value="">All Months</option>'+
+    months.map(m=>{
+      const [yy,mm]=m.split('-');
+      const name=new Date(Number(yy),Number(mm)-1,1).toLocaleString('en-US',{month:'long'});
+      return `<option value="${qbEsc(m)}">${qbEsc(name+' '+yy)}</option>`;
+    }).join('');
+  if(months.includes(current))el.value=current;
+  qbListPopulateWeeks();
+}
+
+function qbListPopulateWeeks(){
+  const year=String(document.getElementById('qbFilterYear')?.value||'');
+  const month=String(document.getElementById('qbFilterMonth')?.value||'');
+  const el=document.getElementById('qbFilterWeek'); if(!el)return;
+  const current=el.value;
+  const weeks=[...new Set(qbCAItems()
+    .filter(x=>{
+      const d=String(x.date||'');
+      return (!year||d.slice(0,4)===year) &&
+             (!month||d.slice(0,7)===month);
+    })
+    .map(x=>qbWeek(x.date))
+    .filter(Boolean))]
+    .sort((a,b)=>Number(a.replace(/\\D/g,''))-Number(b.replace(/\\D/g,'')));
+  el.innerHTML='<option value="">All Weeks</option>'+
+    weeks.map(w=>`<option value="${qbEsc(w)}">${qbEsc(w)}</option>`).join('');
+  if(weeks.includes(current))el.value=current;
+}
+
+function qbInitListFilters(){
+  const ids=['qbFilterYear','qbFilterMonth','qbFilterWeek','qbFilterType','qbFilterDifficulty'];
+  ids.forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  const search=document.getElementById('qbSearch'); if(search)search.value='';
+  qbListPopulateYears();
+}
+
+function qbListFilterChanged(){
+  qbListPopulateMonths();
+  qbRenderList();
+}
+
+function qbRenderList(){
+  qbLoad();
+  const s=(document.getElementById('qbSearch')?.value||'').toLowerCase();
+  const y=String(document.getElementById('qbFilterYear')?.value||'');
+  const m=String(document.getElementById('qbFilterMonth')?.value||'');
+  const w=String(document.getElementById('qbFilterWeek')?.value||'');
+  const t=document.getElementById('qbFilterType')?.value||'';
+  const d=document.getElementById('qbFilterDifficulty')?.value||'';
+
+  const list=qbItems.filter(x=>{
+    const ca=qbCurrentCA(x.caId);
+    const date=String(ca?.date||'');
+    const matchesSearch=!s||String(x.question||'').toLowerCase().includes(s);
+    const matchesYear=!y||date.slice(0,4)===y;
+    const matchesMonth=!m||date.slice(0,7)===m;
+    const matchesWeek=!w||qbWeek(date)===w;
+    return matchesSearch&&matchesYear&&matchesMonth&&matchesWeek&&(!t||x.type===t)&&(!d||x.difficulty===d);
+  });
+
+  document.getElementById('qbCount').textContent=qbItems.length;
+  document.getElementById('qbCaCount').textContent=new Set(qbItems.map(x=>x.caId).filter(Boolean)).size;
+  const el=document.getElementById('qbList');
+  if(!list.length){
+    el.innerHTML='<div class="qb-empty">No questions match the selected filters.</div>';
+    return;
+  }
+  el.innerHTML=list.map(x=>{
+    const ca=qbCurrentCA(x.caId);
+    return `<div class="qb-list-item">
+      <h3>${qbEsc(x.question)}</h3>
+      <div class="qb-meta">${qbEsc(x.type)} · ${qbEsc(x.difficulty)} · ${qbEsc(x.category||'')} · Linked: ${qbEsc(ca?.title||'None (General Question)')}</div>
+      <div class="qb-list-actions"><button onclick="qbEdit('${qbEsc(x.id)}')">Edit</button><button onclick="qbDelete('${qbEsc(x.id)}')">Delete</button></div>
+    </div>`;
+  }).join('');
+}
+window.qbNew=qbNew;window.qbCancel=qbCancel;window.qbSave=qbSave;window.qbEdit=qbEdit;window.qbDelete=qbDelete;
+window.qbRenderList=qbRenderList;window.qbListFilterChanged=qbListFilterChanged;window.qbInitListFilters=qbInitListFilters;window.qbTypeChanged=qbTypeChanged;window.qbCaChanged=qbCaChanged;window.qbCaSelectedChanged=qbCaSelectedChanged;window.qbClearCA=qbClearCA;window.qbCaFilterChanged=qbCaFilterChanged;window.qbCaPopulateYears=qbCaPopulateYears;window.qbCaPopulateMonths=qbCaPopulateMonths;
+window.qbAddStatement=qbAddStatement;window.qbAddMatch=qbAddMatch;window.qbPreview=qbPreview;
+
+qbLoad();
+qbCaPopulateYears();
+qbListPopulateYears();
+
+const oldShow=window.show;
+if(typeof oldShow==='function'){
+  window.show=function(id,el){
+    oldShow(id,el);
+    if(id==='questions'){qbLoad();qbInitListFilters();qbRenderList();}
+  };
+}
+
+document.addEventListener('input',function(e){
+  if(e.target && e.target.id==='qbCaSearch'){
+    qbPopulateCA(document.getElementById('qbCa')?.value||'');
+  }
+});
+
+document.addEventListener('DOMContentLoaded',function(){
+  qbLoad();
+  if(location.hash==='#questions'){
+    setTimeout(()=>{if(typeof window.show==='function')window.show('questions',document.querySelector('.nav[onclick*="questions"]'));},100);
+  }
+});
+})();
+</script>
+
+
+<script>
+window.openQuestionBank=function(el){
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
+  var q=document.getElementById('questions'); if(q)q.classList.add('active');
+  if(typeof window.show==='function'){
+    window.show('questions',el);
+  }else{
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    var q=document.getElementById('questions');
+    if(q)q.classList.add('active');
+    document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
+    if(el)el.classList.add('active');
+    try{localStorage.setItem('hca_studio_day4_view','questions');location.hash='questions';}catch(e){}
+    if(typeof window.qbRenderList==='function')window.qbRenderList();
+  }
+};
+</script>
+
+
+<script>
+(function(){
+  function enforceQuestionRoute(){
+    if((location.hash||'').replace(/^#/,'')!=='questions') return;
+    document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
+    var q=document.getElementById('questions');
+    if(q) q.classList.add('active');
+    document.querySelectorAll('.nav').forEach(function(n){n.classList.remove('active');});
+    var n=document.querySelector('.nav[onclick*="questions"]');
+    if(n)n.classList.add('active');
+    if(typeof window.qbLoad==='function')window.qbLoad();
+    if(typeof window.qbRenderList==='function')window.qbRenderList();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(enforceQuestionRoute,120);},{once:true});
+  else setTimeout(enforceQuestionRoute,120);
+  window.addEventListener('hashchange',function(){setTimeout(enforceQuestionRoute,30);});
+})();
+</script>
+
+
+<script id="question-bank-final-router">
+(function(){
+  function forceQuestionRoute(){
+    if(location.hash !== '#questions') return;
+    var q=document.getElementById('questions');
+    if(!q) return;
+    document.querySelectorAll('.view').forEach(function(v){
+      if(v!==q){
+        v.classList.remove('active');
+        v.style.display='none';
+      }
+    });
+    q.classList.add('active');
+    q.style.display='block';
+    document.querySelectorAll('.nav').forEach(function(n){n.classList.remove('active')});
+    var n=document.querySelector('.nav[onclick*="questions"], .nav[onclick*="openQuestionBank"]');
+    if(n)n.classList.add('active');
+    if(typeof window.qbRenderList==='function')window.qbRenderList();
+  }
+
+  window.addEventListener('hashchange', function(){
+    setTimeout(forceQuestionRoute,0);
+  });
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){
+      setTimeout(forceQuestionRoute,100);
+    },{once:true});
+  }else{
+    setTimeout(forceQuestionRoute,100);
+  }
+})();
+</script>
+
+
+<script id="question-bank-navigation-final-fix">
+(function(){
+  const baseShow = window.show;
+  if(typeof baseShow !== 'function') return;
+
+  window.show = function(id, el){
+    // The Question Bank route used inline display:none on inactive views.
+    // Clear that stale inline state before every normal navigation.
+    document.querySelectorAll('.view').forEach(function(v){
+      v.style.removeProperty('display');
+    });
+
+    baseShow(id, el);
+
+    // Make the selected view the only active view.
+    document.querySelectorAll('.view').forEach(function(v){
+      if(v.id !== id) v.classList.remove('active');
+    });
+    var target=document.getElementById(id);
+    if(target){
+      target.classList.add('active');
+      target.style.removeProperty('display');
+    }
+
+    if(id==='questions'){
+      if(typeof window.qbLoad==='function') window.qbLoad();
+      if(typeof window.qbRenderList==='function') window.qbRenderList();
+    }else{
+      // Redraw data-backed sections after leaving Question Bank.
+      if(id==='saved' && typeof window.drawSaved==='function') window.drawSaved();
+      if(id==='weekly' && typeof window.drawWeeks==='function') window.drawWeeks();
+      if(id==='public' && typeof window.drawPublic==='function') window.drawPublic();
+      if(id==='editor' && typeof window.renderLive==='function') window.renderLive();
+    }
+  };
+})();
+</script>
+
+
+<script id="weekly-quiz-script">
+(function(){
+  const QUIZ_QB_KEY='hca_question_bank_v1';
+  let quizQuestions=[];
+  let quizLastSelection=[];
+
+  function qLoad(){
+    try{
+      const x=HCAStore.parseArray(HCAStore.getRaw(QUIZ_QB_KEY));
+      return Array.isArray(x)?x:[];
+    }catch(e){return []}
+  }
+  function qCA(){
+    try{
+      const x=HCAStore.parseArray(HCAStore.getRaw('hca_studio_day4_items'));
+      return Array.isArray(x)?x:[];
+    }catch(e){return []}
+  }
+  function qWeek(date){
+    if(!date)return '';
+    const d=new Date(date+'T00:00:00');
+    if(Number.isNaN(d.getTime()))return '';
+    const first=new Date(d.getFullYear(),d.getMonth(),1);
+    const firstDay=(first.getDay()+6)%7;
+    return 'Week '+(Math.floor((d.getDate()+firstDay-1)/7)+1);
+  }
+  function qCAFor(q){
+    return qCA().find(x=>String(x.id)===String(q.caId));
+  }
+  function qEsc(s){
+    return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+  function qMonthLabel(m){
+    if(!m)return '';
+    const [y,mo]=m.split('-');
+    const d=new Date(Number(y),Number(mo)-1,1);
+    return isNaN(d.getTime())?m:d.toLocaleString('en-IN',{month:'long',year:'numeric'});
+  }
+  // Return every question. Linked questions can be filtered by their
+  // Current Affair metadata; general questions remain available when
+  // no CA-specific filter is selected.
+  function qAll(){
+    return qLoad();
+  }
+  function qMeta(q){
+    const ca=qCAFor(q);
+    const d=String(ca?.date||q.date||'');
+    const cat=q.category||ca?.cat||ca?.category||'Miscellaneous';
+    return {ca,d,cat};
+  }
+  function quizPopulateYears(){
+    const el=document.getElementById('quizYear');if(!el)return;
+    const current=el.value;
+    const years=[...new Set(qAll().map(q=>qMeta(q).d.slice(0,4)).filter(y=>/^[0-9]{4}$/.test(y)))]
+      .sort((a,b)=>Number(b)-Number(a));
+    el.innerHTML='<option value="">All Years</option>'+years.map(y=>`<option value="${qEsc(y)}">${qEsc(y)}</option>`).join('');
+    if(years.includes(current))el.value=current; else el.value='';
+    quizPopulateMonths();
+  }
+  function quizPopulateMonths(){
+    const year=document.getElementById('quizYear')?.value||'';
+    const el=document.getElementById('quizMonth');if(!el)return;
+    const current=el.value;
+    const months=[...new Set(qAll().map(q=>qMeta(q).d.slice(0,7))
+      .filter(m=>/^[0-9]{4}-[0-9]{2}$/.test(m))
+      .filter(m=>!year||m.slice(0,4)===year))].sort().reverse();
+    el.innerHTML='<option value="">All Months</option>'+months.map(m=>`<option value="${qEsc(m)}">${qEsc(qMonthLabel(m))}</option>`).join('');
+    if(months.includes(current))el.value=current; else el.value='';
+    quizPopulateWeeks();
+  }
+  function quizPopulateWeeks(){
+    const year=document.getElementById('quizYear')?.value||'';
+    const month=document.getElementById('quizMonth')?.value||'';
+    const el=document.getElementById('quizWeek');if(!el)return;
+    const current=el.value;
+    const weeks=[...new Set(qAll().map(q=>{
+      const d=qMeta(q).d; return {d,w:qWeek(d)};
+    }).filter(x=>(!year||x.d.slice(0,4)===year)&&(!month||x.d.slice(0,7)===month))
+      .map(x=>x.w).filter(Boolean))]
+      .sort((a,b)=>Number(a.replace(/\D/g,''))-Number(b.replace(/\D/g,'')));
+    el.innerHTML='<option value="">All Weeks</option>'+weeks.map(w=>`<option value="${qEsc(w)}">${qEsc(w)}</option>`).join('');
+    if(weeks.includes(current))el.value=current; else el.value='';
+    quizPopulateCategories();
+  }
+  function quizPopulateCategories(){
+    const el=document.getElementById('quizCategory');if(!el)return;
+    const current=el.value;
+    const y=document.getElementById('quizYear')?.value||'';
+    const m=document.getElementById('quizMonth')?.value||'';
+    const w=document.getElementById('quizWeek')?.value||'';
+    const cats=[...new Set(qAll().filter(q=>{
+      const {d}=qMeta(q);
+      return (!y||d.slice(0,4)===y)&&(!m||d.slice(0,7)===m)&&(!w||qWeek(d)===w);
+    }).map(q=>qMeta(q).cat).filter(Boolean))].sort();
+    el.innerHTML='<option value="">All Categories</option>'+cats.map(c=>`<option value="${qEsc(c)}">${qEsc(c)}</option>`).join('');
+    if(cats.includes(current))el.value=current; else el.value='';
+    quizUpdateAvailable();
+  }
+  function quizFiltered(){
+    const y=document.getElementById('quizYear')?.value||'';
+    const m=document.getElementById('quizMonth')?.value||'';
+    const w=document.getElementById('quizWeek')?.value||'';
+    const c=document.getElementById('quizCategory')?.value||'';
+    const dff=document.getElementById('quizDifficulty')?.value||'';
+    return qAll().filter(q=>{
+      const {ca,d,cat}=qMeta(q);
+      // General questions have no date/category. They are included only
+      // when the user has not selected a date/category filter.
+      if(y && d.slice(0,4)!==y)return false;
+      if(m && d.slice(0,7)!==m)return false;
+      if(w && qWeek(d)!==w)return false;
+      if(c && cat!==c)return false;
+      return !dff||q.difficulty===dff;
+    });
+  }
+  function quizUpdateAvailable(){
+    const n=quizFiltered().length;
+    const el=document.getElementById('quizAvailable');if(el)el.textContent=n;
+    const count=document.getElementById('quizCount');if(!count)return;
+    const current=count.value;
+    const vals=[5,10,15,20].filter(x=>x<=n);
+    let html=vals.map(x=>`<option value="${x}">${x} Questions</option>`).join('');
+    if(n)html+=`<option value="${n}">All ${n} Questions</option>`;
+    count.innerHTML=html||'<option value="0">No questions available</option>';
+    if(current && [...count.options].some(o=>o.value===current))count.value=current;
+    else if(vals.length)count.value=String(vals[0]);
+    else if(n)count.value=String(n);
+    const status=document.getElementById('quizDataStatus');
+    if(status){
+      status.textContent=n ? ('V48 data connected · '+n+' question'+(n===1?'':'s')+' available.') : 'No questions are currently loaded. Use Question Bank → Migrate Existing Data or Import Backup.';
+      status.className='quiz-data-status '+(n?'ok':'warn');
+    }
+  }
+  function quizFilterChanged(level){
+    if(level==='year'){
+      quizPopulateMonths();
+    }else if(level==='month'){
+      quizPopulateWeeks();
+    }else if(level==='week'){
+      quizPopulateCategories();
+    }
+    quizUpdateAvailable();
+  }
+  function shuffle(arr){
+    const a=arr.slice();
+    for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+    return a;
+  }
+  // V50: smart quiz selection. Prefer a balanced mix of question families,
+  // then fill from the remaining pool when a family has too few questions.
+  function quizTypeFamily(q){
+    const t=String(q?.type||'');
+    if(t==='Statement-Based'||t==='Multiple-Statement')return 'Statement';
+    if(t==='Concept + Current Affair')return 'Concept';
+    if(t==='Match the Following')return 'Match';
+    if(t==='True/False')return 'TrueFalse';
+    if(t==='Numerical/Data')return 'Numerical';
+    return 'Direct';
+  }
+  function smartQuizSelect(pool,n){
+    const groups={};
+    pool.forEach(q=>{const f=quizTypeFamily(q);(groups[f]||(groups[f]=[])).push(q)});
+    Object.keys(groups).forEach(k=>groups[k]=shuffle(groups[k]));
+    const weights={Direct:3,Statement:2,Concept:2,Match:1,TrueFalse:1,Numerical:1};
+    const keys=Object.keys(groups);
+    if(keys.length<=1)return shuffle(pool).slice(0,n);
+    const target={}; keys.forEach(k=>target[k]=0);
+    let remaining=n;
+    while(remaining>0){
+      const candidates=keys.filter(k=>target[k]<groups[k].length);
+      if(!candidates.length)break;
+      candidates.sort((a,b)=>{
+        const ra=(weights[a]||1)/(target[a]+1);
+        const rb=(weights[b]||1)/(target[b]+1);
+        return rb-ra;
+      });
+      target[candidates[0]]++; remaining--;
+    }
+    let selected=[];
+    keys.forEach(k=>selected.push(...groups[k].slice(0,target[k])));
+    if(selected.length<n){
+      const used=new Set(selected.map(q=>q.id));
+      selected.push(...shuffle(pool.filter(q=>!used.has(q.id))).slice(0,n-selected.length));
+    }
+    return shuffle(selected).slice(0,n);
+  }
+
+  function quizGenerate(){
+    const pool=quizFiltered();
+    if(!pool.length){alert('No questions are available for this selection yet. Add more questions in Question Bank first.');return;}
+    const n=Math.min(Number(document.getElementById('quizCount').value)||pool.length,pool.length);
+    quizQuestions=smartQuizSelect(pool,n);
+    quizLastSelection=quizQuestions.slice();
+    document.getElementById('quizSetup').style.display='none';
+    document.getElementById('quizPlayer').style.display='block';
+    document.getElementById('quizResult').innerHTML='';
+    document.getElementById('quizTitle').textContent='Weekly CA Quiz';
+    const y=document.getElementById('quizYear').value||'All Years';
+    const m=document.getElementById('quizMonth').value||'All Months';
+    const w=document.getElementById('quizWeek').value||'All Weeks';
+    document.getElementById('quizMeta').textContent=`${y} · ${m?qMonthLabel(m):'All Months'} · ${w||'All Weeks'} · ${n} Questions`;
+    document.getElementById('quizProgress').textContent=`0 / ${n} answered`;
+    document.getElementById('quizForm').innerHTML=quizQuestions.map((q,i)=>quizQuestionHTML(q,i)).join('');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function quizQuestionHTML(q,i){
+    const s=q.structure||{};
+    let body='';
+    if(q.type==='Statement-Based'||q.type==='Multiple-Statement'){
+      const ss=Array.isArray(s)?s:(s.statements||[]);
+      if(ss.length)body+='<div class="quiz-statements">'+ss.map((x,j)=>`<div class="quiz-statement"><b>${j+1}.</b><span>${qEsc(x)}</span></div>`).join('')+'</div>';
+      body+='<div class="quiz-instruction">Which of the statements given above is/are correct?</div>';
+    }else if(q.type==='Match the Following'){
+      const rows=Array.isArray(s)?s:(s.matches||[]);
+      body+='<table class="quiz-match">'+rows.map((r,j)=>`<tr><td>${j+1}. ${qEsc(r.left)}</td><td>${String.fromCharCode(65+j)}. ${qEsc(r.right)}</td></tr>`).join('')+'</table>';
+      body+='<div class="quiz-instruction">Choose the correct code:</div>';
+    }else if(q.type==='True/False'){
+      body+='<div class="quiz-instruction">Choose True or False.</div>';
+    }
+    const opts=Array.isArray(s)?s:(s.options||[]);
+    const visibleOpts=q.type==='True/False'?opts.slice(0,2):opts.slice(0,4);
+    body+='<div class="quiz-options">'+visibleOpts.map((o,j)=>`<label class="quiz-option"><input type="radio" name="quiz_${qEsc(q.id)}" value="${String.fromCharCode(65+j)}" onchange="quizAnswerChanged()"><b>${String.fromCharCode(65+j)}.</b><span>${qEsc(o)}</span></label>`).join('')+'</div>';
+    return `<div class="quiz-question" id="quizQuestion_${qEsc(q.id)}"><div class="quiz-qhead"><span class="quiz-qno">Q${i+1}</span><span class="quiz-qtext">${qEsc(q.question).replace(/\n/g,'<br>')}</span></div>${body}<div class="quiz-explanation" id="quizExp_${qEsc(q.id)}"><b>Explanation:</b> ${qEsc(q.explanation)}</div></div>`;
+  }
+  function quizAnswerChanged(){
+    const answered=quizQuestions.filter(q=>document.querySelector(`input[name="quiz_${CSS.escape(q.id)}"]:checked`)).length;
+    const el=document.getElementById('quizProgress');if(el)el.textContent=`${answered} / ${quizQuestions.length} answered`;
+  }
+  function quizSubmit(){
+    if(!quizQuestions.length)return;
+    let score=0,answered=0;
+    quizQuestions.forEach(q=>{
+      const selected=document.querySelector(`input[name="quiz_${CSS.escape(q.id)}"]:checked`);
+      const card=document.getElementById('quizQuestion_'+q.id);
+      const exp=document.getElementById('quizExp_'+q.id);
+      if(selected){
+        answered++;
+        if(selected.value===q.answer){score++;card.classList.add('quiz-correct')}
+        else card.classList.add('quiz-wrong');
+      }else card.classList.add('quiz-unanswered');
+      if(exp)exp.style.display='block';
+      document.querySelectorAll(`input[name="quiz_${CSS.escape(q.id)}"]`).forEach(i=>i.disabled=true);
+    });
+    const pct=Math.round(score/quizQuestions.length*100);
+    document.getElementById('quizResult').innerHTML=`<div class="quiz-result"><div class="quiz-score">Score: ${score} / ${quizQuestions.length} (${pct}%)</div><div class="quiz-result-note">${answered===quizQuestions.length?'All questions answered.':'You answered '+answered+' of '+quizQuestions.length+'. Unanswered questions are marked separately.'} Review the explanations below.</div></div>`;
+    document.querySelector('#quizPlayer .quiz-actions .btn.primary')?.setAttribute('disabled','true');
+    document.getElementById('quizResult').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  function quizBackToSetup(){
+    document.getElementById('quizPlayer').style.display='none';
+    document.getElementById('quizSetup').style.display='block';
+    quizQuestions=[];
+    quizUpdateAvailable();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function openWeeklyQuiz(el){
+    if(typeof window.show==='function')window.show('quiz',el);
+    else{
+      document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+      document.getElementById('quiz')?.classList.add('active');
+      document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
+      if(el)el.classList.add('active');
+    }
+    quizInit();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function quizInit(){
+    document.getElementById('quizSetup').style.display='block';
+    document.getElementById('quizPlayer').style.display='none';
+    quizPopulateYears();
+    quizUpdateAvailable();
+  }
+
+  window.openWeeklyQuiz=openWeeklyQuiz;
+  window.quizInit=quizInit;
+  window.quizFilterChanged=quizFilterChanged;
+  window.quizUpdateAvailable=quizUpdateAvailable;
+  window.quizGenerate=quizGenerate;
+  window.quizAnswerChanged=quizAnswerChanged;
+  window.quizSubmit=quizSubmit;
+  window.quizBackToSetup=quizBackToSetup;
+
+  document.addEventListener('DOMContentLoaded',function(){
+    if(location.hash==='#quiz')setTimeout(quizInit,80);
+  });
+})();
+</script>
+
+<script id="weekly-quiz-final-init-fix">
+(function(){
+  function initQuizSafely(){
+    try{
+      if(typeof window.quizInit==='function'){
+        window.quizInit();
+      }else{
+        // Fallback if the main quiz script was not exposed yet.
+        var y=document.getElementById('quizYear');
+        var m=document.getElementById('quizMonth');
+        var w=document.getElementById('quizWeek');
+        var c=document.getElementById('quizCategory');
+        var n=document.getElementById('quizCount');
+        if(y && !y.options.length) y.innerHTML='<option value="">All Years</option>';
+        if(m && !m.options.length) m.innerHTML='<option value="">All Months</option>';
+        if(w && !w.options.length) w.innerHTML='<option value="">All Weeks</option>';
+        if(c && !c.options.length) c.innerHTML='<option value="">All Categories</option>';
+        if(n && !n.options.length) n.innerHTML='<option value="0">No questions available</option>';
+      }
+    }catch(err){
+      console.error('Quiz initialization failed:',err);
+      // Never leave the user with blank native selects.
+      var y=document.getElementById('quizYear');
+      var m=document.getElementById('quizMonth');
+      var w=document.getElementById('quizWeek');
+      var c=document.getElementById('quizCategory');
+      var n=document.getElementById('quizCount');
+      if(y && !y.options.length)y.innerHTML='<option value="">All Years</option>';
+      if(m && !m.options.length)m.innerHTML='<option value="">All Months</option>';
+      if(w && !w.options.length)w.innerHTML='<option value="">All Weeks</option>';
+      if(c && !c.options.length)c.innerHTML='<option value="">All Categories</option>';
+      if(n && !n.options.length)n.innerHTML='<option value="0">No questions available</option>';
+    }
+  }
+  function onReady(){
+    if(location.hash==='#quiz' || document.getElementById('quiz')?.classList.contains('active')){
+      setTimeout(initQuizSafely,0);
+    }
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',onReady,{once:true});
+  else onReady();
+  window.addEventListener('hashchange',function(){
+    if(location.hash==='#quiz')setTimeout(initQuizSafely,0);
+  });
+  // Re-initialize when the Weekly CA Quiz navigation is clicked.
+  document.addEventListener('click',function(e){
+    var nav=e.target.closest && e.target.closest('.nav');
+    if(nav && /Weekly CA Quiz/i.test(nav.textContent||''))setTimeout(initQuizSafely,0);
+  });
+})();
+</script>
+<div style="text-align:center;padding:18px;color:#888;font-size:11px">Healthy Current Affairs Studio · V48 Persistent Question Bank</div>
+</body>
+</html>
