@@ -1716,7 +1716,7 @@ function show(id,writeHash=true){
       else history.replaceState(null,'','#'+id);
     }else{
       if(id==='dashboard') history.replaceState({view:'dashboard'},'', '/');
-      else if(id==='current') history.replaceState({view:'current',level:'home'},'', '/current-affairs/');
+      else if(id==='current') history.replaceState({view:'current',level:'home'},'', seoPathForCurrent());
       else history.replaceState(null,'','#'+id);
     }
   }
@@ -1737,7 +1737,7 @@ document.querySelectorAll('.nav').forEach(n=>n.addEventListener('click',()=>{
   if(n.dataset.navRole==='current-affairs'){
     show('current',false);
     if((location.protocol==='file:'||location.protocol==='blob:')) history.replaceState({view:'current',level:'home'},'','#current');
-    else history.replaceState({view:'current',level:'home'},'','/current-affairs/');
+    else history.replaceState({view:'current',level:'home'},'',seoPathForCurrent());
     renderCAHome();
     seoApply('current');
     setTimeout(()=>document.getElementById('caBrowserContent')?.scrollIntoView({behavior:'smooth',block:'start'}),60);
@@ -1816,15 +1816,19 @@ function seoBaseUrl(){
 function seoSlug(s){
   return String(s||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,100)||'article';
 }
+function seoQ(p){p=String(p||'').replace(/^\/+|\/+$/g,'');return p?'/?p='+p:'/';}
+function seoKey(u){u=String(u||'');const m=u.match(/[?&]p=([^&#]*)/);let p=m?decodeURIComponent(m[1]):u.replace(/[?#].*$/,'');p=p.replace(/^\/+|\/+$/g,'');return p?'/'+p:'/';}
+function seoMonthSlug(m){const [y,mo]=String(m||'').split('-');const d=new Date(Number(y),Number(mo)-1,1);return isNaN(d)?'':d.toLocaleString('en-IN',{month:'long'}).toLowerCase();}
+function seoPathForCurrent(){return seoQ('current-affairs');}
 function seoPathForCA(x){
   const d=String(x?.date||'');
   const y=d.slice(0,4), m=caMonth(x), w=caWeek(x);
-  if(!/^\d{4}$/.test(y)||!/^\d{4}-\d{2}$/.test(m)||!w) return '/current-affairs/';
-  return `/current-affairs/${encodeURIComponent(y)}/${encodeURIComponent(monthLabel(m).toLowerCase())}/${encodeURIComponent(seoSlug(w))}/${encodeURIComponent(seoSlug(x.title||String(x.id||'article')))}-a${encodeURIComponent(String(x.id||''))}/`;
+  if(!/^\d{4}$/.test(y)||!/^\d{4}-\d{2}$/.test(m)||!w) return seoPathForCurrent();
+  return seoQ(`current-affairs/${encodeURIComponent(y)}/${encodeURIComponent(seoMonthSlug(m))}/${encodeURIComponent(seoSlug(w))}/${encodeURIComponent(seoSlug(x.title||String(x.id||'article')))}-a${encodeURIComponent(String(x.id||''))}`);
 }
-function seoPathForYear(y){return `/current-affairs/${encodeURIComponent(String(y))}/`;}
-function seoPathForMonth(m){const y=String(m).slice(0,4);return `/current-affairs/${encodeURIComponent(y)}/${encodeURIComponent(monthLabel(m).toLowerCase())}/`;}
-function seoPathForWeek(m,w){const y=String(m).slice(0,4);return `/current-affairs/${encodeURIComponent(y)}/${encodeURIComponent(monthLabel(m).toLowerCase())}/${encodeURIComponent(seoSlug(w))}/`;}
+function seoPathForYear(y){return seoQ(`current-affairs/${encodeURIComponent(String(y))}`);}
+function seoPathForMonth(m){const y=String(m).slice(0,4);return seoQ(`current-affairs/${encodeURIComponent(y)}/${encodeURIComponent(seoMonthSlug(m))}`);}
+function seoPathForWeek(m,w){const y=String(m).slice(0,4);return seoQ(`current-affairs/${encodeURIComponent(y)}/${encodeURIComponent(seoMonthSlug(m))}/${encodeURIComponent(seoSlug(w))}`);}
 function seoAbsolute(path){const base=seoBaseUrl();return base?(base+path):path;}
 function seoSetMeta(id,content){const el=document.getElementById(id);if(el)el.setAttribute('content',content||'');}
 function seoSetCanonical(url){const el=document.getElementById('seoCanonical');if(el)el.setAttribute('href',url||'');}
@@ -1835,7 +1839,7 @@ function seoDescriptionForArticle(x){
 function seoBreadcrumbSchema(items){return {'@type':'BreadcrumbList','itemListElement':items.map((x,i)=>({'@type':'ListItem','position':i+1,'name':x.name,...(x.url?{item:seoAbsolute(x.url)}:{})}))};}
 function seoApply(kind='home',payload=null){
   let title='Healthy Current Affairs — SSC CGL Current Affairs', desc='SSC CGL current affairs with concise exam-focused facts, context, key points and takeaways from Healthy Current Affairs.', path='/', type='website', schema=null;
-  if(kind==='current'){ title='Current Affairs — Healthy Current Affairs'; desc='SSC CGL current affairs arranged by year, month and week, with exam-focused revision material.'; path='/current-affairs/'; }
+  if(kind==='current'){ title='Current Affairs — Healthy Current Affairs'; desc='SSC CGL current affairs arranged by year, month and week, with exam-focused revision material.'; path=seoPathForCurrent(); }
   if(kind==='year'){ title=`${payload} Current Affairs — Healthy Current Affairs`; desc=`SSC CGL current affairs for ${payload}, organized for quick revision.`; path=seoPathForYear(payload); }
   if(kind==='month'){ title=`${monthLabel(payload)} Current Affairs — Healthy Current Affairs`; desc=`SSC CGL current affairs for ${monthLabel(payload)}, organized week-wise for quick revision.`; path=seoPathForMonth(payload); }
   if(kind==='week'){ const [m,w]=payload; title=`${w} — ${monthLabel(m)} Current Affairs | Healthy Current Affairs`; desc=`SSC CGL current affairs for ${w} of ${monthLabel(m)}, with key facts and exam takeaways.`; path=seoPathForWeek(m,w); }
@@ -1846,13 +1850,14 @@ function seoApply(kind='home',payload=null){
   document.title=title.replace(/^Healthy Current Affairs/,brandName);
   seoSetMeta('seoDescription',desc); seoSetMeta('seoOgTitle',document.title); seoSetMeta('seoOgDescription',desc); seoSetMeta('seoOgType',type); seoSetMeta('seoOgUrl',seoAbsolute(path)); seoSetMeta('seoTwitterTitle',document.title); seoSetMeta('seoTwitterDescription',desc); seoSetCanonical(seoAbsolute(path));
   const crumbs=[{name:'Home',url:'/'}];
-  if(kind==='current'||kind==='year'||kind==='month'||kind==='week'||kind==='article') crumbs.push({name:'Current Affairs',url:'/current-affairs/'});
+  if(kind==='current'||kind==='year'||kind==='month'||kind==='week'||kind==='article') crumbs.push({name:'Current Affairs',url:seoPathForCurrent()});
   if(kind==='year') crumbs.push({name:String(payload),url:seoPathForYear(payload)});
   if(kind==='month') crumbs.push({name:String(payload).slice(0,4),url:seoPathForYear(String(payload).slice(0,4))},{name:monthLabel(payload),url:seoPathForMonth(payload)});
   if(kind==='week') crumbs.push({name:String(payload[0]).slice(0,4),url:seoPathForYear(String(payload[0]).slice(0,4))},{name:monthLabel(payload[0]),url:seoPathForMonth(payload[0])},{name:String(payload[1]),url:seoPathForWeek(payload[0],payload[1])});
   if(kind==='article'&&payload){const m=caMonth(payload),w=caWeek(payload);crumbs.push({name:String(payload.date||'').slice(0,4),url:seoPathForYear(String(payload.date||'').slice(0,4))},{name:monthLabel(m),url:seoPathForMonth(m)},{name:String(w||'Week'),url:seoPathForWeek(m,w)},{name:String(payload.title||'Current Affair')});}
   const data=schema?Object.assign({},schema,{'breadcrumb':seoBreadcrumbSchema(crumbs)}):{'@context':'https://schema.org','@type':'WebSite','name':brandName,'url':seoAbsolute('/')};
   const ld=document.getElementById('seoJsonLd');if(ld)ld.textContent=JSON.stringify(data);
+  try{if(/^https?:$/.test(location.protocol)&&!new URLSearchParams(location.search).has('p')&&(location.pathname||'/')!=='/'&&path&&path!=='/'){history.replaceState(history.state,'',path+location.hash);}}catch(e){}
 }
 function seoNavigate(path,state){
   const st=state||{};
@@ -1893,7 +1898,7 @@ function caWeeksForMonth(m){
 function caBreadcrumb(items){
   $('caBreadcrumb').innerHTML=items.map((item,i)=>{
     const last=i===items.length-1;
-    const href=item.level==='home'?'/current-affairs/':item.level==='year'?seoPathForYear(item.value):item.level==='month'?seoPathForMonth(item.value):item.level==='week'?seoPathForWeek(caBrowserMonth,item.value):'/current-affairs/';
+    const href=item.level==='home'?seoPathForCurrent():item.level==='year'?seoPathForYear(item.value):item.level==='month'?seoPathForMonth(item.value):item.level==='week'?seoPathForWeek(caBrowserMonth,item.value):seoPathForCurrent();
     const localHref=item.level==='home'?'#current':item.level==='year'?('#ca/'+encodeURIComponent(String(item.value||''))):item.level==='month'?('#ca/'+encodeURIComponent(String(item.value||'').slice(0,4))+'/'+encodeURIComponent(String(item.value||'').slice(5,7))):'#current';
     return (i?' <span class="sep">›</span> ':'')+(last?`<span class="current">${esc(item.label)}</span>`:`<a href="${esc((location.protocol==='file:'||location.protocol==='blob:')?localHref:href)}" data-ca-level="${esc(item.level)}" data-ca-value="${esc(item.value||'')}">${esc(item.label)}</a>`);
   }).join('');
@@ -1935,7 +1940,7 @@ function caStats(list){const n=list.length;const counts={};list.forEach(x=>{cons
 function caCountLabel(n){return n+' current affair'+(n===1?'':'s');}
 function caChips(cats){if(!cats||!cats.length)return '';const shown=cats.slice(0,3);return `<span class="ca-chip-row">${shown.map(c=>{const i=catInfo(c);return `<span class="ca-chip cat-chip-c" style="--cc:${i.fg};--cb:${i.bg}"><span aria-hidden="true">${i.ic}</span> ${esc(c)}</span>`;}).join('')}${cats.length>3?`<span class="ca-chip more">+${cats.length-3} more</span>`:''}</span>`;}
 function caLevelCard(label,meta,level,value,badge='',chips=[],sub=''){
-  const href=level==='year'?seoPathForYear(value):level==='month'?seoPathForMonth(value):'/current-affairs/';
+  const href=level==='year'?seoPathForYear(value):level==='month'?seoPathForMonth(value):seoPathForCurrent();
   const localHref=level==='year'?('#ca/'+encodeURIComponent(String(value||''))):level==='month'?('#ca/'+encodeURIComponent(String(value||'').slice(0,4))+'/'+encodeURIComponent(String(value||'').slice(5,7))):'#current';
   return `<a class="ca-level-card" href="${esc((location.protocol==='file:'||location.protocol==='blob:')?localHref:href)}" data-ca-level="${esc(level)}" data-ca-value="${esc(value)}">
     <span class="arrow" aria-hidden="true">→</span>
@@ -2105,7 +2110,7 @@ function renderReferenceTopic(year,index){
   const sections=Array.isArray(t.sections)?t.sections:[];
   const staticFacts=Array.isArray(t.staticFacts)?t.staticFacts:[];
   const isOngoing=x=>/ongoing|to be updated|awaited|\btbd\b/i.test(x);
-  const hideWrap=txt=>{const m=String(txt).match(/^([^:]{2,60}):\s*(.+)$/);return m?`<b class="ry-k">${esc(m[1])}:</b> <span class="ry-ans" data-ry-reveal>${esc(m[2])}</span>`:esc(txt);};
+  const hideWrap=txt=>String(txt).split(/\r?\n/).map(l=>l.trim()).filter(Boolean).map(line=>{const m=line.match(/^([^:]{2,60}):\s*(.+)$/);return m?`<b class="ry-k">${esc(m[1])}:</b> <span class="ry-ans" data-ry-reveal>${esc(m[2])}</span>`:esc(line);}).join('<br>');
   const secCard=sec=>{const items=(Array.isArray(sec.items)?sec.items:[]).map(String).filter(x=>x.trim());let chips=[],rest=[];items.forEach((it,ii)=>{if(ii===0&&it.includes('|')){chips=it.replace(/\.\s*$/,'').split('|').map(x=>x.trim()).filter(Boolean);}else rest.push(it);});const ong=items.some(isOngoing);return `<div class="ry-ev${ong?' ongoing':''}"><div class="ry-ev-head"><h3>${esc(sec.title||'Key points')}</h3>${ong?'<span class="ry-ongoing">⏳ Ongoing / to be updated</span>':''}</div>${chips.length?`<div class="ry-ev-chips">${chips.map((x,ci2)=>`<span class="ry-evchip">${['📍','🎾','🗓️','🏷️'][ci2]||'•'} ${esc(x)}</span>`).join('')}</div>`:''}<ul class="ry-ev-list">${rest.map(it=>`<li class="${/singles|winner|champion|defeated|won|title/i.test(it)?'res':''}">${hideWrap(it)}</li>`).join('')}</ul></div>`;};
   const nav=(i,dir)=>i===null?`<span class="art-nav-btn ${dir} off"><span>${dir==='prev'?'‹ Previous':'Next ›'}</span></span>`:`<button type="button" class="art-nav-btn ${dir}" data-reference-topic="${i}" data-reference-year="${esc(year)}" title="${esc(raw[i].title||'')}"><span>${dir==='prev'?'‹ Previous':'Next ›'}</span></button>`;
   detail.innerHTML=`<div class="art-toprow ry-toprow"><button type="button" class="art-back-btn" id="referenceTopicsBackBtn"><span aria-hidden="true">←</span> All topics</button>${order.length>1?`<div class="art-topnav">${nav(prev,'prev')}<span class="art-pos">${k+1} of ${order.length}<small>${esc(year)}</small></span>${nav(next,'next')}</div>`:''}</div>
@@ -2404,7 +2409,7 @@ document.addEventListener('click',e=>{
  if(t.dataset.artJump){const el=document.getElementById(t.dataset.artJump);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return;}
  if(t.dataset.artOpen){const cur=CA.find(a=>String(a.id)===String(t.dataset.artOpen));openCA(t.dataset.artOpen,'current',cur?{year:String(cur.date||'').slice(0,4),month:caMonth(cur),week:caWeek(cur)}:null);return;}
  const nav=t.dataset.artNav,mo=t.dataset.artMonth||'',wk=t.dataset.artWeek||'',yr=t.dataset.artYear||'';
- if(nav==='home')seoNavigate('/current-affairs/',{view:'current',level:'home'});
+ if(nav==='home')seoNavigate(seoPathForCurrent(),{view:'current',level:'home'});
  else if(nav==='year')seoNavigate(seoPathForYear(yr),{view:'current',level:'year',year:yr});
  else if(nav==='month')seoNavigate(seoPathForMonth(mo),{view:'current',level:'month',month:mo});
  else if(nav==='week'){caBrowserMonth=mo;seoNavigate(seoPathForWeek(mo,wk),{view:'current',level:'week',month:mo,week:wk});}
@@ -2419,6 +2424,7 @@ function openCA(id,fromView='current',state=null,noPush=false){
  try{const r=JSON.parse(localStorage.getItem('hca_student_read')||'[]').map(String);if(!r.includes(String(x.id))){r.push(String(x.id));localStorage.setItem('hca_student_read',JSON.stringify(r.slice(-3000)));}}catch(e){}
  const artUrl=(location.protocol==='file:'||location.protocol==='blob:')?'#article/'+encodeURIComponent(String(x.id)):seoPathForCA(x);
  try{if(noPush)history.replaceState({view:'article',id:String(x.id),from:fromView,returnState:state||null},'',location.pathname+location.search+location.hash);else if(!(location.protocol==='file:'||location.protocol==='blob:')||location.hash!==artUrl)history.pushState({view:'article',id:String(x.id),from:fromView,returnState:state||null},'',artUrl);}catch(e){}
+ try{seoApply('article',x);}catch(e){}
  requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'smooth'}));
 }
 function optionsFor(q){
@@ -2651,7 +2657,7 @@ document.addEventListener('click',e=>{
     e.preventDefault();
     const level=levelButton.dataset.caLevel;
     const value=levelButton.dataset.caValue||'';
-    if(level==='home'){seoNavigate('/current-affairs/',{view:'current',level:'home'});}
+    if(level==='home'){seoNavigate(seoPathForCurrent(),{view:'current',level:'home'});}
     else if(level==='year'){seoNavigate(seoPathForYear(value),{view:'current',level:'year',year:value});}
     else if(level==='month'){seoNavigate(seoPathForMonth(value),{view:'current',level:'month',month:value});}
     else if(level==='week'){seoNavigate(seoPathForWeek(caBrowserMonth,value),{view:'current',level:'week',month:caBrowserMonth,week:value});}
@@ -2685,7 +2691,7 @@ document.addEventListener('click',e=>{
   const b=e.target.closest && e.target.closest('[data-ca-back]');
   if(!b)return;
   const target=b.dataset.caBack;
-  if(target==='home'){seoNavigate('/current-affairs/',{view:'current',level:'home'});}
+  if(target==='home'){seoNavigate(seoPathForCurrent(),{view:'current',level:'home'});}
   else if(target==='year'){seoNavigate(seoPathForYear(caBrowserYear),{view:'current',level:'year',year:caBrowserYear});}
   else if(target==='month'){seoNavigate(seoPathForMonth(caBrowserMonth),{view:'current',level:'month',month:caBrowserMonth});}
   requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'smooth'}));
@@ -2716,7 +2722,7 @@ $('articleBack').addEventListener('click',()=>{
   if(history.state?.view==='article'){
     history.back();
   }else{
-    show(articleReturnView||'current'); if((articleReturnView||'current')==='current'){const m=articleReturnState?.month,w=articleReturnState?.week;if(m&&w)history.replaceState({view:'current',level:'week',month:m,week:w},'',seoPathForWeek(m,w));else if(m)history.replaceState({view:'current',level:'month',month:m},'',seoPathForMonth(m));else history.replaceState({view:'current',level:'home'},'','/current-affairs/');seoApply(w?'week':m?'month':'current',w?[m,w]:m||null);}
+    show(articleReturnView||'current'); if((articleReturnView||'current')==='current'){const m=articleReturnState?.month,w=articleReturnState?.week;if(m&&w)history.replaceState({view:'current',level:'week',month:m,week:w},'',seoPathForWeek(m,w));else if(m)history.replaceState({view:'current',level:'month',month:m},'',seoPathForMonth(m));else history.replaceState({view:'current',level:'home'},'',seoPathForCurrent());seoApply(w?'week':m?'month':'current',w?[m,w]:m||null);}
   }
 });
 function routeFromPath(){
@@ -2724,7 +2730,8 @@ function routeFromPath(){
   if(fallbackRoute && /^\/[^\/]/.test(fallbackRoute)){
     history.replaceState({},'',fallbackRoute);
   }
-  const path=(location.pathname||'/').replace(/\/+$/,'')||'/';
+  const __qp=new URLSearchParams(location.search).get('p');
+  const path=__qp!=null?seoKey('/?p='+encodeURIComponent(__qp)):((location.pathname||'/').replace(/\/+$/,'')||'/');
   const h=location.hash||'';
   if(h.startsWith('#article/')){
     const id=decodeURIComponent(h.slice(9)); const x=CA.find(a=>String(a.id)===String(id));
@@ -2759,7 +2766,7 @@ function routeFromPath(){
   }
   if(h==='#current'||h==='#weekly'){
     if((location.protocol==='file:'||location.protocol==='blob:')){show('current',false);renderCAHome();seoApply('current');return;}
-    history.replaceState({view:'current',level:'home'},'','/current-affairs/');
+    history.replaceState({view:'current',level:'home'},'',seoPathForCurrent());
   }
   const parts=path.split('/').filter(Boolean);
   if(!parts.length){show('dashboard',false);renderDashboard();seoApply('home');return;}
@@ -2771,7 +2778,7 @@ function routeFromPath(){
     if(parts.length===2){renderCAMonths(y);seoApply('year',y);return;}
     const months=caMonthsForYear(y);
     const monthName=decodeURIComponent(parts[2]||'');
-    const m=months.find(x=>monthLabel(x).toLowerCase()===monthName.toLowerCase());
+    const m=months.find(x=>monthLabel(x).toLowerCase()===monthName.toLowerCase()||seoMonthSlug(x)===monthName.toLowerCase());
     if(!m){renderCAMonths(y);seoApply('year',y);return;}
     if(parts.length===3){renderCAWeeks(m);seoApply('month',m);return;}
     const wSlug=decodeURIComponent(parts[3]||'');
@@ -2779,18 +2786,18 @@ function routeFromPath(){
     if(parts.length>=5){
       const last=decodeURIComponent(parts[parts.length-1]||'');
       const idm=last.match(/-a([A-Za-z0-9_-]+)$/);
-      const art=(idm&&CA.find(x=>String(x.id)===idm[1]))||CA.find(x=>seoPathForCA(x).replace(/\/$/,'')===path);
+      const art=(idm&&CA.find(x=>String(x.id)===idm[1]))||CA.find(x=>seoKey(seoPathForCA(x))===path);
       if(art){const wk=caWeek(art),mo=caMonth(art);openCA(art.id,'current',{level:'week',month:mo,week:wk},true);seoApply('article',art);return;}
     }
     const match=caWeeksForMonth(m).find(([w])=>seoSlug(w)===wSlug);
     if(match){renderCAArticles(m,match[0]);seoApply('week',[m,match[0]]);return;}
     // Article URLs end in -a<ID>. Find the article by its canonical slug.
-    const article=CA.find(x=>seoPathForCA(x).replace(/\/$/,'')===path);
+    const article=CA.find(x=>seoKey(seoPathForCA(x))===path);
     if(article){$('articlePage').innerHTML=articleHTML(article);show('articleView',false);seoApply('article',article);requestAnimationFrame(()=>window.scrollTo({top:0,left:0,behavior:'smooth'}));return;}
     renderCAWeeks(m);seoApply('month',m);return;
   }
   // Support direct article URL resolution even when the article path is nested below a week.
-  const article=CA.find(x=>seoPathForCA(x).replace(/\/$/,'')===path);
+  const article=CA.find(x=>seoKey(seoPathForCA(x))===path);
   if(article){$('articlePage').innerHTML=articleHTML(article);show('articleView',false);seoApply('article',article);return;}
   show('dashboard',false);renderDashboard();seoApply('home');
 }
